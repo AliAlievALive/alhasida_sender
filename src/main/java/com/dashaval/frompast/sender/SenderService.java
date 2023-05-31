@@ -35,4 +35,11 @@ public class SenderService {
                 senderRegistrationRequest.age());
         senderDao.insertSender(sender);
     }
+
+    public void deleteSenderById(Long senderId) {
+        if (!senderDao.existsSenderWithId(senderId)) {
+            throw new ResourceNotFoundException("sender with id [%s] not found".formatted(senderId));
+        }
+        senderDao.deleteSender(senderId);
+    }
 }

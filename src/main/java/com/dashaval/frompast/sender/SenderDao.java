@@ -11,4 +11,8 @@ public interface SenderDao {
     void insertSender(Sender sender);
 
     boolean existsSenderWithEmail(String email);
+
+    void deleteSender(Long id);
+
+    boolean existsSenderWithId(Long senderId);
 }

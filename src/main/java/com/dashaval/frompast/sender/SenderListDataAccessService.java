@@ -39,8 +39,20 @@ public class SenderListDataAccessService implements SenderDao {
 
     @Override
     public boolean existsSenderWithEmail(String email) {
-        return senders.stream()
-                .anyMatch(s -> s.getEmail().equals(email));
+        return senders.stream().anyMatch(s -> s.getEmail().equals(email));
+    }
+
+    @Override
+    public void deleteSender(Long id) {
+        senders.stream()
+                .filter(sender -> sender.getId().equals(id))
+                .findFirst()
+                .ifPresent(sender -> senders.remove(sender));
+    }
+
+    @Override
+    public boolean existsSenderWithId(Long senderId) {
+        return senders.stream().anyMatch(sender -> sender.getId().equals(senderId));
     }
 
 

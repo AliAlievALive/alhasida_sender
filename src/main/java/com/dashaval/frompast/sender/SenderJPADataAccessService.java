@@ -30,4 +30,14 @@ public class SenderJPADataAccessService implements SenderDao {
     public boolean existsSenderWithEmail(String email) {
         return sendersRepo.existsSenderByEmail(email);
     }
+
+    @Override
+    public void deleteSender(Long id) {
+        sendersRepo.deleteById(id);
+    }
+
+    @Override
+    public boolean existsSenderWithId(Long senderId) {
+        return sendersRepo.existsById(senderId);
+    }
 }
