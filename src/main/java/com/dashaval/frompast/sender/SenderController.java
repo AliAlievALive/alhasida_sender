@@ -28,6 +28,12 @@ public class SenderController {
 
     @DeleteMapping("{id}")
     public void deleteSender(@PathVariable Long id) {
-        senderService.deleteSenderById(id);
+        senderService.deleteSender(id);
+    }
+
+    @PostMapping("{id}")
+    public void registrationSender(@PathVariable Long id,
+                                   @RequestBody SenderUpdateRequest updateRequest) {
+        senderService.updateSender(id, updateRequest);
     }
 }

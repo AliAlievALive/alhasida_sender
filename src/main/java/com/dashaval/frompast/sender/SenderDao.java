@@ -15,4 +15,6 @@ public interface SenderDao {
     void deleteSender(Long id);
 
     boolean existsSenderWithId(Long senderId);
+
+    void updateSender(Sender sender);
 }

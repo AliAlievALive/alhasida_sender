@@ -55,5 +55,8 @@ public class SenderListDataAccessService implements SenderDao {
         return senders.stream().anyMatch(sender -> sender.getId().equals(senderId));
     }
 
-
+    @Override
+    public void updateSender(Sender sender) {
+        senders.add(sender);
+    }
 }

@@ -40,4 +40,9 @@ public class SenderJPADataAccessService implements SenderDao {
     public boolean existsSenderWithId(Long senderId) {
         return sendersRepo.existsById(senderId);
     }
+
+    @Override
+    public void updateSender(Sender sender) {
+        sendersRepo.save(sender);
+    }
 }
