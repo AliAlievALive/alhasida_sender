@@ -31,7 +31,7 @@ public class SenderController {
         senderService.deleteSender(id);
     }
 
-    @PostMapping("{id}")
+    @PutMapping("{id}")
     public void registrationSender(@PathVariable Long id,
                                    @RequestBody SenderUpdateRequest updateRequest) {
         senderService.updateSender(id, updateRequest);

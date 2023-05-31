@@ -12,7 +12,7 @@ import java.util.List;
 public class SenderService {
     private final SenderDao senderDao;
 
-    public SenderService(@Qualifier("jpa") SenderDao senderDao) {
+    public SenderService(@Qualifier("list") SenderDao senderDao) {
         this.senderDao = senderDao;
     }
 
@@ -51,13 +51,11 @@ public class SenderService {
         boolean changed = false;
         if (updateRequest.name() != null && !updateRequest.name().equals(sender.getName())) {
             sender.setName(updateRequest.name());
-            senderDao.insertSender(sender);
             changed = true;
         }
 
         if (updateRequest.age() != null && !updateRequest.age().equals(sender.getAge())) {
             sender.setAge(updateRequest.age());
-            senderDao.insertSender(sender);
             changed = true;
         }
 
