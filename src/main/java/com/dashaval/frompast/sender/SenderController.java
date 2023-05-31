@@ -25,4 +25,9 @@ public class SenderController {
     public void registrationSender(@RequestBody SenderRegistrationRequest senderRegistrationRequest) {
         senderService.addSender(senderRegistrationRequest);
     }
+
+    @DeleteMapping("{id}")
+    public void deleteSender(@PathVariable Long id) {
+        senderService.deleteSenderById(id);
+    }
 }
