@@ -7,22 +7,21 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@Table(name = "sender", uniqueConstraints = {
+        @UniqueConstraint(name = "sender_email_unique", columnNames = "email")
+})
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 public class Sender {
     @Id
-    @SequenceGenerator(name = "sender_id_sequence", sequenceName = "sender_id_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sender_id_sequence")
+    @SequenceGenerator(name = "sender_id_seq", sequenceName = "sender_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sender_id_seq")
     private Long id;
-    @Column(
-            nullable = false
-    )
+    @Column(nullable = false)
     private String name;
-    @Column(
-            nullable = false
-    )
+    @Column(nullable = false)
     private String email;
     private Integer age;
 
