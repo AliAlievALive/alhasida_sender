@@ -12,7 +12,7 @@ import java.util.List;
 public class SenderService {
     private final SenderDao senderDao;
 
-    public SenderService(@Qualifier("jpa") SenderDao senderDao) {
+    public SenderService(@Qualifier("jdbc") SenderDao senderDao) {
         this.senderDao = senderDao;
     }
 
