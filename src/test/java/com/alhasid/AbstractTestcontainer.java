@@ -1,4 +1,4 @@
-package com.dashaval.frompast;
+package com.alhasid;
 
 import com.github.javafaker.Faker;
 import org.flywaydb.core.Flyway;

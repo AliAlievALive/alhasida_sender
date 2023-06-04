@@ -1,7 +1,7 @@
-package com.dashaval.frompast;
+package com.alhasid;
 
-import com.dashaval.frompast.sender.Sender;
-import com.dashaval.frompast.sender.SenderRepository;
+import com.alhasid.sender.Sender;
+import com.alhasid.sender.SenderRepository;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import org.springframework.boot.CommandLineRunner;

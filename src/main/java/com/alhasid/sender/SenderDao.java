@@ -1,4 +1,4 @@
-package com.dashaval.frompast.sender;
+package com.alhasid.sender;
 
 import java.util.List;
 import java.util.Optional;

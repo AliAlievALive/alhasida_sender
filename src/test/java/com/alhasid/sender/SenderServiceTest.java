@@ -1,8 +1,8 @@
-package com.dashaval.frompast.sender;
+package com.alhasid.sender;
 
-import com.dashaval.frompast.exception.DuplicateResourceException;
-import com.dashaval.frompast.exception.RequestValidationException;
-import com.dashaval.frompast.exception.ResourceNotFoundException;
+import com.alhasid.exception.DuplicateResourceException;
+import com.alhasid.exception.RequestValidationException;
+import com.alhasid.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

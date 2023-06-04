@@ -1,4 +1,4 @@
-package com.dashaval.frompast.sender;
+package com.alhasid.sender;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

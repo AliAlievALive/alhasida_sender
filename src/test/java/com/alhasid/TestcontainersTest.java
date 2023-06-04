@@ -1,4 +1,4 @@
-package com.dashaval.frompast;
+package com.alhasid;
 
 import org.junit.jupiter.api.Test;
 

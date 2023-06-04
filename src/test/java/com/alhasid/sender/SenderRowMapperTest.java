@@ -1,4 +1,4 @@
-package com.dashaval.frompast.sender;
+package com.alhasid.sender;
 
 import org.junit.jupiter.api.Test;
 

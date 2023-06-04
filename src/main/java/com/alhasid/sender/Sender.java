@@ -1,4 +1,4 @@
-package com.dashaval.frompast.sender;
+package com.alhasid.sender;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.dashaval.frompast.sender;
+package com.alhasid.sender;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

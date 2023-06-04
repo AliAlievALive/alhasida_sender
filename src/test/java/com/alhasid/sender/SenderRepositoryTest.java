@@ -1,6 +1,6 @@
-package com.dashaval.frompast.sender;
+package com.alhasid.sender;
 
-import com.dashaval.frompast.AbstractTestcontainer;
+import com.alhasid.AbstractTestcontainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
