@@ -31,9 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-/backend/src/main/resources/application.yml
 /mvnw
 /mvnw.cmd
 /.mvn/
-/backend/Dockerrun.aws.json
-/docker-compose.yml
