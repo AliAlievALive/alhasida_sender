@@ -36,4 +36,4 @@ build/
 /mvnw.cmd
 /.mvn/
 /backend/Dockerrun.aws.json
-/backend/docker-compose.yml
+/docker-compose.yml
