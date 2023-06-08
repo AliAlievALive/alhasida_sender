@@ -114,6 +114,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <mainClass>com.alhasid.FrompastApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
