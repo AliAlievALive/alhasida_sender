@@ -18,6 +18,7 @@ public class FrompastApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FrompastApplication.class, args);
+
     }
 
     @Bean

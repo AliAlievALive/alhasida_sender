@@ -1,0 +1,23 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "sender-api",
+      "image": "alialiev/frompast:latest",
+      "essential": true,
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8080
+        }
+      ],
+      "environment": [
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:postgresql://awseb-e-cxz3mgn7np-stack-awsebrdsdatabase-6p2kghl1qv75.cbihxggmre6d.eu-central-1.rds.amazonaws.com:5432/sender"
+        }
+      ]
+    }
+  ]
+}
