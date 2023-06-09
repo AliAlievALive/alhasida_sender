@@ -20,7 +20,7 @@
     <properties>
         <java.version>17</java.version>
         <docker.username>alialiev</docker.username>
-        <docker.image.name>alhasid-api</docker.image.name>
+        <docker.image.name>frompast</docker.image.name>
         <docker.image.tag/>
     </properties>
     <dependencies>
