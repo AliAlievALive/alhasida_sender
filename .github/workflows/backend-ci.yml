@@ -14,8 +14,6 @@ jobs:
       postgres:
         image: postgres:14.7
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
           POSTGRES_USER: alhasida
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: sender
@@ -31,6 +29,11 @@ jobs:
         working-directory: ./backend
     steps:
       - uses: actions/checkout@v3
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
