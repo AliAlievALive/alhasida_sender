@@ -28,8 +28,6 @@ jobs:
       run:
         working-directory: ./backend
     steps:
-#      - name: Login to Docker Hub
-#        run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
