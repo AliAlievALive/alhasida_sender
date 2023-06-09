@@ -30,7 +30,7 @@ jobs:
           --health-retries 5
     defaults:
       run:
-        working-directory: "..\backend\"
+        working-directory: '..\backend\'
     steps:
       - name: Login to Docker Hub
         run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
