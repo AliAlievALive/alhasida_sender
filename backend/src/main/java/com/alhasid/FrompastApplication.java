@@ -33,7 +33,6 @@ public class FrompastApplication {
                     firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com",
                     random.nextInt(16, 99)
             );
-
             senderRepository.save(sender);
         };
     }
