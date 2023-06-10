@@ -26,11 +26,10 @@ jobs:
           --health-retries 5
     defaults:
       run:
-        working-directory: ./backend
+        working-directory: ../backend
     steps:
       - name: Send Slack Message
         run: >
-          cd ../
           curl && curl -X POST -H 'Content-type: application/json' 
           --data '{"text":"Deployment started :progress_bar: بِسۡمِ ٱللَّهِ"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
