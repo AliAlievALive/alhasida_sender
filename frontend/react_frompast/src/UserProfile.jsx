@@ -4,14 +4,10 @@ const UserProfile = ({name, age, gender, imageNumber, ...props}) => {
         <div>
             <h1>{ name }</h1>
             <p>{ age }</p>
-            <img src={`https://randomuser.me/api/portraits/${gender}/${imageNumber}.jpg`}/>
+            <img src={`https://randomuser.me/api/portraits/${gender}/${imageNumber}.jpg`} alt={}/>
             {props.children}
         </div>
     )
 };
 
 export default UserProfile;
-
-// const userProfile = (name, age, gender) => {
-//
-// };
