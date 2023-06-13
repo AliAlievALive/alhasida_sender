@@ -1,4 +1,4 @@
-package com.alhasid.sender;
+package com.alhasid.taker;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,12 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class SenderRowMapperTest {
+class TakerRowMapperTest {
 
     @Test
     void mapRow() throws SQLException {
         // Given
-        SenderRowMapper senderRowMapper = new SenderRowMapper();
+        TakerRowMapper takerRowMapper = new TakerRowMapper();
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getLong("id")).thenReturn(1L);
         when(resultSet.getInt("age")).thenReturn(20);
@@ -22,10 +22,10 @@ class SenderRowMapperTest {
         when(resultSet.getString("email")).thenReturn("ali@test.ru");
 
         // When
-        Sender actual = senderRowMapper.mapRow(resultSet, 1);
+        Taker actual = takerRowMapper.mapRow(resultSet, 1);
 
         // Then
-        Sender expected = new Sender(1L, "Ali", "ali@test.ru", 20);
+        Taker expected = new Taker(1L, "Ali", "ali@test.ru", 20);
         assertThat(actual).isEqualTo(expected);
     }
 }

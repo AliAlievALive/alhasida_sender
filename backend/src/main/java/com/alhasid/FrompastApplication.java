@@ -1,7 +1,7 @@
 package com.alhasid;
 
-import com.alhasid.sender.Sender;
-import com.alhasid.sender.SenderRepository;
+import com.alhasid.taker.Taker;
+import com.alhasid.taker.TakerRepository;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import org.springframework.boot.CommandLineRunner;
@@ -21,19 +21,19 @@ public class FrompastApplication {
     }
 
     @Bean
-    CommandLineRunner runner(SenderRepository senderRepository) throws NoSuchAlgorithmException {
+    CommandLineRunner runner(TakerRepository takerRepository) throws NoSuchAlgorithmException {
         Random random = SecureRandom.getInstanceStrong();
         return args -> {
             Faker faker = new Faker();
             Name name = faker.name();
             String firstName = name.firstName();
             String lastName = name.lastName();
-            Sender sender = new Sender(
+            Taker taker = new Taker(
                     firstName + " " + lastName,
                     firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com",
                     random.nextInt(16, 99)
             );
-            senderRepository.save(sender);
+            takerRepository.save(taker);
         };
     }
 }

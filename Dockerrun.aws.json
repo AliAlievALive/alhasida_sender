@@ -2,7 +2,7 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "sender-api",
+      "name": "taker-api",
       "image": "alialiev/frompast:latest",
       "essential": true,
       "memory": 512,
@@ -15,7 +15,7 @@
       "environment": [
         {
           "name": "SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://awseb-e-z3pd2ygmc2-stack-awsebrdsdatabase-zo2yk1tu7cx9.cbihxggmre6d.eu-central-1.rds.amazonaws.com:5432/sender"
+          "value": "jdbc:postgresql://awseb-e-z3pd2ygmc2-stack-awsebrdsdatabase-zo2yk1tu7cx9.cbihxggmre6d.eu-central-1.rds.amazonaws.com:5432/taker"
         }
       ]
     }

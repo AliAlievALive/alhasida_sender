@@ -16,7 +16,7 @@ jobs:
         env:
           POSTGRES_USER: alhasida
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: sender
+          POSTGRES_DB: taker
         ports:
           - 5332:5432
         options: >-

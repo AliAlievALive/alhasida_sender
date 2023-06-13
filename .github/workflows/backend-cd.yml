@@ -16,7 +16,7 @@ jobs:
         env:
           POSTGRES_USER: alhasida
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: sender
+          POSTGRES_DB: taker
         ports:
           - 5332:5432
         options: >-
@@ -37,7 +37,7 @@ jobs:
       - name: Slack commit message and sha
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":":github: https://github.com/AliAlievALive/alhasida_sender/commit/${{ github.sha }} - ${{ github.event.head_commit.message }}"}' 
+          --data '{"text":":github: https://github.com/AliAlievALive/alhasida_taker/commit/${{ github.sha }} - ${{ github.event.head_commit.message }}"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/setup-java@v3
         with:
@@ -91,7 +91,7 @@ jobs:
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":":githubloading: Commiting to repo https://github.com/AliAlievALive/alhasida_sender"}' 
+          --data '{"text":":githubloading: Commiting to repo https://github.com/AliAlievALive/alhasida_taker"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       #      - name: Commit and push Dockerrun.aws.json
       #        run: |
@@ -103,7 +103,7 @@ jobs:
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":"Deployment and commit completed :github_check_mark: :alhamdulillah-ala-kulli-hal: - http://sender-api-env.eba-2rhm2g2i.eu-central-1.elasticbeanstalk.com"}' 
+          --data '{"text":"Deployment and commit completed :github_check_mark: :alhamdulillah-ala-kulli-hal: - http://taker-api-env.eba-2rhm2g2i.eu-central-1.elasticbeanstalk.com"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Send Slack Message
         if: always()
