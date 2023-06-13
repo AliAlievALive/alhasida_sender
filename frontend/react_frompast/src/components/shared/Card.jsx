@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 
 export default function CardWithImage({name, email, age, gender, imageNumber}) {
-    gender = gender === "MALE" ? "men" : "women";
+    const genderIn = gender === "MALE" ? "men" : "women";
     return (
         <Center py={6}>
             <Box
@@ -33,7 +33,7 @@ export default function CardWithImage({name, email, age, gender, imageNumber}) {
                 <Flex justify={'center'} mt={-12}>
                     <Avatar
                         size={'xl'}
-                        src={`https://randomuser.me/api/portraits/${gender}/${imageNumber}.jpg`}
+                        src={`https://randomuser.me/api/portraits/${genderIn}/${imageNumber}.jpg`}
                         alt={'Taker'}
                         css={{
                             border: '2px solid white',

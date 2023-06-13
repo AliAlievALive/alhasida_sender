@@ -3,7 +3,7 @@ version: '0.1'
 services:
   db:
     container_name: taker_db
-    image: postgres:14.7
+    image: postgres:15.1
     environment:
       POSTGRES_USER: alhasida
       POSTGRES_PASSWORD: postgres

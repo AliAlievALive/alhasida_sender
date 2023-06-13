@@ -24,7 +24,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class TakerIntegrationTest {
     private static final Random RANDOM = new Random();
-    private static final String SENDER_URI = "/api/v1/takers";
+    private static final String TAKER_URI = "/api/v1/takers";
     @Autowired
     private WebTestClient webTestClient;
 
@@ -43,7 +43,7 @@ class TakerIntegrationTest {
 
         // send a post request
         webTestClient.post()
-                .uri(SENDER_URI)
+                .uri(TAKER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(request), TakerRegistrationRequest.class)
@@ -53,7 +53,7 @@ class TakerIntegrationTest {
 
         // get all takers
         List<Taker> allTakers = webTestClient.get()
-                .uri(SENDER_URI)
+                .uri(TAKER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -82,7 +82,7 @@ class TakerIntegrationTest {
         expectedTaker.setId(id);
         // get taker by id
         webTestClient.get()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(TAKER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -107,7 +107,7 @@ class TakerIntegrationTest {
 
         // send a post request
         webTestClient.post()
-                .uri(SENDER_URI)
+                .uri(TAKER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(request), TakerRegistrationRequest.class)
@@ -117,7 +117,7 @@ class TakerIntegrationTest {
 
         // get all takers
         List<Taker> allTakers = webTestClient.get()
-                .uri(SENDER_URI)
+                .uri(TAKER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -138,7 +138,7 @@ class TakerIntegrationTest {
 
         // delete taker
         webTestClient.delete()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(TAKER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -146,7 +146,7 @@ class TakerIntegrationTest {
 
         // get taker by id
         webTestClient.get()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(TAKER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -168,7 +168,7 @@ class TakerIntegrationTest {
 
         // send a post request
         webTestClient.post()
-                .uri(SENDER_URI)
+                .uri(TAKER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(request), TakerRegistrationRequest.class)
@@ -178,7 +178,7 @@ class TakerIntegrationTest {
 
         // get all takers
         List<Taker> allTakers = webTestClient.get()
-                .uri(SENDER_URI)
+                .uri(TAKER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -201,7 +201,7 @@ class TakerIntegrationTest {
         String newName = "newName";
         TakerUpdateRequest updateRequest = new TakerUpdateRequest(newName, null, null);
         webTestClient.put()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(TAKER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(updateRequest), TakerUpdateRequest.class)
@@ -211,7 +211,7 @@ class TakerIntegrationTest {
 
         // get taker by id
         Taker updatedTaker = webTestClient.get()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(TAKER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
