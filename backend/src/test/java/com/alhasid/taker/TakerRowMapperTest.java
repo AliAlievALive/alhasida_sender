@@ -20,12 +20,13 @@ class TakerRowMapperTest {
         when(resultSet.getInt("age")).thenReturn(20);
         when(resultSet.getString("name")).thenReturn("Ali");
         when(resultSet.getString("email")).thenReturn("ali@test.ru");
+        when(resultSet.getString("gender")).thenReturn("MALE");
 
         // When
         Taker actual = takerRowMapper.mapRow(resultSet, 1);
 
         // Then
-        Taker expected = new Taker(1L, "Ali", "ali@test.ru", 20);
+        Taker expected = new Taker(1L, "Ali", "ali@test.ru", 20, Gender.MALE);
         assertThat(actual).isEqualTo(expected);
     }
 }

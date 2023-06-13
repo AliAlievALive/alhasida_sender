@@ -1,5 +1,6 @@
 package com.alhasid.journey;
 
+import com.alhasid.taker.Gender;
 import com.alhasid.taker.Taker;
 import com.alhasid.taker.TakerRegistrationRequest;
 import com.alhasid.taker.TakerUpdateRequest;
@@ -36,8 +37,9 @@ class TakerIntegrationTest {
         String name = fakerName.fullName();
         String email = fakerName.fullName() + "-" + UUID.randomUUID() + "mail.ru";
         int age = RANDOM.nextInt(1, 100);
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
-        TakerRegistrationRequest request = new TakerRegistrationRequest(name, email, age);
+        TakerRegistrationRequest request = new TakerRegistrationRequest(name, email, age, gender);
 
         // send a post request
         webTestClient.post()
@@ -62,7 +64,7 @@ class TakerIntegrationTest {
                 .getResponseBody();
 
         // make sure that taker is present
-        Taker expectedTaker = new Taker(name, email, age);
+        Taker expectedTaker = new Taker(name, email, age, gender);
 
         assertThat(allTakers)
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
@@ -99,8 +101,9 @@ class TakerIntegrationTest {
         String name = fakerName.fullName();
         String email = fakerName.fullName() + "-" + UUID.randomUUID() + "mail.ru";
         int age = RANDOM.nextInt(1, 100);
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
-        TakerRegistrationRequest request = new TakerRegistrationRequest(name, email, age);
+        TakerRegistrationRequest request = new TakerRegistrationRequest(name, email, age, gender);
 
         // send a post request
         webTestClient.post()
@@ -159,8 +162,9 @@ class TakerIntegrationTest {
         String name = fakerName.fullName();
         String email = fakerName.fullName() + "-" + UUID.randomUUID() + "mail.ru";
         int age = RANDOM.nextInt(1, 100);
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
-        TakerRegistrationRequest request = new TakerRegistrationRequest(name, email, age);
+        TakerRegistrationRequest request = new TakerRegistrationRequest(name, email, age, gender);
 
         // send a post request
         webTestClient.post()
@@ -216,7 +220,7 @@ class TakerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        Taker expected = new Taker(id, newName, email, age);
+        Taker expected = new Taker(id, newName, email, age, gender);
 
         assertThat(updatedTaker).isEqualTo(expected);
     }

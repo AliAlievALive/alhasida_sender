@@ -26,16 +26,21 @@ public class Taker {
     @Column(nullable = false)
     private String email;
     private Integer age;
-    public Taker(Long id, String name, String email, Integer age) {
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    public Taker(Long id, String name, String email, Integer age, Gender gender) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
+        this.gender = gender;
     }
-    public Taker(String name, String email, Integer age) {
+    public Taker(String name, String email, Integer age, Gender gender) {
         this.name = name;
         this.email = email;
         this.age = age;
+        this.gender = gender;
     }
 
     @Override
@@ -46,17 +51,19 @@ public class Taker {
         Taker taker = (Taker) o;
 
         if (!Objects.equals(id, taker.id)) return false;
-        if (!Objects.equals(name, taker.name)) return false;
-        if (!Objects.equals(email, taker.email)) return false;
-        return Objects.equals(age, taker.age);
+        if (!name.equals(taker.name)) return false;
+        if (!email.equals(taker.email)) return false;
+        if (!Objects.equals(age, taker.age)) return false;
+        return gender == taker.gender;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + name.hashCode();
+        result = 31 * result + email.hashCode();
         result = 31 * result + (age != null ? age.hashCode() : 0);
+        result = 31 * result + gender.hashCode();
         return result;
     }
 }
