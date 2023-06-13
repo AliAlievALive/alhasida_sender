@@ -1,8 +1,8 @@
 package com.alhasid.journey;
 
-import com.alhasid.sender.Sender;
-import com.alhasid.sender.SenderRegistrationRequest;
-import com.alhasid.sender.SenderUpdateRequest;
+import com.alhasid.taker.Taker;
+import com.alhasid.taker.TakerRegistrationRequest;
+import com.alhasid.taker.TakerUpdateRequest;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import org.junit.jupiter.api.Test;
@@ -21,14 +21,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-class SenderIntegrationTest {
+class TakerIntegrationTest {
     private static final Random RANDOM = new Random();
-    private static final String SENDER_URI = "/api/v1/senders";
+    private static final String SENDER_URI = "/api/v1/takers";
     @Autowired
     private WebTestClient webTestClient;
 
     @Test
-    void canRegisterSender() {
+    void canRegisterTaker() {
         // create registration request
         Faker faker = new Faker();
         Name fakerName = faker.name();
@@ -37,61 +37,61 @@ class SenderIntegrationTest {
         String email = fakerName.fullName() + "-" + UUID.randomUUID() + "mail.ru";
         int age = RANDOM.nextInt(1, 100);
 
-        SenderRegistrationRequest request = new SenderRegistrationRequest(name, email, age);
+        TakerRegistrationRequest request = new TakerRegistrationRequest(name, email, age);
 
         // send a post request
         webTestClient.post()
                 .uri(SENDER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(request), SenderRegistrationRequest.class)
+                .body(Mono.just(request), TakerRegistrationRequest.class)
                 .exchange()
                 .expectStatus()
                 .isOk();
 
-        // get all senders
-        List<Sender> allSenders = webTestClient.get()
+        // get all takers
+        List<Taker> allTakers = webTestClient.get()
                 .uri(SENDER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(new ParameterizedTypeReference<Sender>() {
+                .expectBodyList(new ParameterizedTypeReference<Taker>() {
                 })
                 .returnResult()
                 .getResponseBody();
 
-        // make sure that sender is present
-        Sender expectedSender = new Sender(name, email, age);
+        // make sure that taker is present
+        Taker expectedTaker = new Taker(name, email, age);
 
-        assertThat(allSenders)
+        assertThat(allTakers)
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
-                .contains(expectedSender);
+                .contains(expectedTaker);
 
         Long id = null;
-        if (allSenders != null) {
-            id = allSenders.stream()
-                    .filter(sender -> sender.getEmail().equals(email))
-                    .map(Sender::getId)
+        if (allTakers != null) {
+            id = allTakers.stream()
+                    .filter(taker -> taker.getEmail().equals(email))
+                    .map(Taker::getId)
                     .findFirst()
                     .orElseThrow();
         }
 
-        expectedSender.setId(id);
-        // get sender by id
+        expectedTaker.setId(id);
+        // get taker by id
         webTestClient.get()
                 .uri(SENDER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody(new ParameterizedTypeReference<Sender>() {
+                .expectBody(new ParameterizedTypeReference<Taker>() {
                 })
-                .isEqualTo(expectedSender);
+                .isEqualTo(expectedTaker);
     }
 
     @Test
-    void canDeleteSender() {
+    void canDeleteTaker() {
         // create registration request
         Faker faker = new Faker();
         Name fakerName = faker.name();
@@ -100,40 +100,40 @@ class SenderIntegrationTest {
         String email = fakerName.fullName() + "-" + UUID.randomUUID() + "mail.ru";
         int age = RANDOM.nextInt(1, 100);
 
-        SenderRegistrationRequest request = new SenderRegistrationRequest(name, email, age);
+        TakerRegistrationRequest request = new TakerRegistrationRequest(name, email, age);
 
         // send a post request
         webTestClient.post()
                 .uri(SENDER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(request), SenderRegistrationRequest.class)
+                .body(Mono.just(request), TakerRegistrationRequest.class)
                 .exchange()
                 .expectStatus()
                 .isOk();
 
-        // get all senders
-        List<Sender> allSenders = webTestClient.get()
+        // get all takers
+        List<Taker> allTakers = webTestClient.get()
                 .uri(SENDER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(new ParameterizedTypeReference<Sender>() {
+                .expectBodyList(new ParameterizedTypeReference<Taker>() {
                 })
                 .returnResult()
                 .getResponseBody();
 
         Long id = null;
-        if (allSenders != null) {
-            id = allSenders.stream()
-                    .filter(sender -> sender.getEmail().equals(email))
-                    .map(Sender::getId)
+        if (allTakers != null) {
+            id = allTakers.stream()
+                    .filter(taker -> taker.getEmail().equals(email))
+                    .map(Taker::getId)
                     .findFirst()
                     .orElseThrow();
         }
 
-        // delete sender
+        // delete taker
         webTestClient.delete()
                 .uri(SENDER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
@@ -141,7 +141,7 @@ class SenderIntegrationTest {
                 .expectStatus()
                 .isOk();
 
-        // get sender by id
+        // get taker by id
         webTestClient.get()
                 .uri(SENDER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
@@ -151,7 +151,7 @@ class SenderIntegrationTest {
     }
 
     @Test
-    void canUpdateSender() {
+    void canUpdateTaker() {
         // create registration request
         Faker faker = new Faker();
         Name fakerName = faker.name();
@@ -160,64 +160,64 @@ class SenderIntegrationTest {
         String email = fakerName.fullName() + "-" + UUID.randomUUID() + "mail.ru";
         int age = RANDOM.nextInt(1, 100);
 
-        SenderRegistrationRequest request = new SenderRegistrationRequest(name, email, age);
+        TakerRegistrationRequest request = new TakerRegistrationRequest(name, email, age);
 
         // send a post request
         webTestClient.post()
                 .uri(SENDER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(request), SenderRegistrationRequest.class)
+                .body(Mono.just(request), TakerRegistrationRequest.class)
                 .exchange()
                 .expectStatus()
                 .isOk();
 
-        // get all senders
-        List<Sender> allSenders = webTestClient.get()
+        // get all takers
+        List<Taker> allTakers = webTestClient.get()
                 .uri(SENDER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(new ParameterizedTypeReference<Sender>() {
+                .expectBodyList(new ParameterizedTypeReference<Taker>() {
                 })
                 .returnResult()
                 .getResponseBody();
 
         Long id = null;
-        if (allSenders != null) {
-            id = allSenders.stream()
-                    .filter(sender -> sender.getEmail().equals(email))
-                    .map(Sender::getId)
+        if (allTakers != null) {
+            id = allTakers.stream()
+                    .filter(taker -> taker.getEmail().equals(email))
+                    .map(Taker::getId)
                     .findFirst()
                     .orElseThrow();
         }
 
-        // update sender
+        // update taker
         String newName = "newName";
-        SenderUpdateRequest updateRequest = new SenderUpdateRequest(newName, null, null);
+        TakerUpdateRequest updateRequest = new TakerUpdateRequest(newName, null, null);
         webTestClient.put()
                 .uri(SENDER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(updateRequest), SenderUpdateRequest.class)
+                .body(Mono.just(updateRequest), TakerUpdateRequest.class)
                 .exchange()
                 .expectStatus()
                 .isOk();
 
-        // get sender by id
-        Sender updatedSender = webTestClient.get()
+        // get taker by id
+        Taker updatedTaker = webTestClient.get()
                 .uri(SENDER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody(Sender.class)
+                .expectBody(Taker.class)
                 .returnResult()
                 .getResponseBody();
 
-        Sender expected = new Sender(id, newName, email, age);
+        Taker expected = new Taker(id, newName, email, age);
 
-        assertThat(updatedSender).isEqualTo(expected);
+        assertThat(updatedTaker).isEqualTo(expected);
     }
 }

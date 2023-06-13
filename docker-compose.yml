@@ -2,7 +2,7 @@ version: '0.1'
 
 services:
   db:
-    container_name: sender_db
+    container_name: taker_db
     image: postgres:14.7
     environment:
       POSTGRES_USER: alhasida
@@ -20,7 +20,7 @@ services:
     image: alialiev/frompast
 #    можно так подключаться к бд, а можно через command, что закомментирован ниже
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sender
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taker
     ports:
       - "8088:8080"
     networks:
@@ -29,7 +29,7 @@ services:
       - db
     restart: unless-stopped
 #    command:
-#      - --spring.datasource.url=jdbc:postgresql://db:5432/sender
+#      - --spring.datasource.url=jdbc:postgresql://db:5432/taker
 
 networks:
   db:

@@ -1,4 +1,4 @@
-package com.alhasid.sender;
+package com.alhasid.taker;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,30 +9,30 @@ import lombok.ToString;
 import java.util.Objects;
 
 @Entity
-@Table(name = "sender", uniqueConstraints = {
-        @UniqueConstraint(name = "sender_email_unique", columnNames = "email")
+@Table(name = "taker", uniqueConstraints = {
+        @UniqueConstraint(name = "taker_email_unique", columnNames = "email")
 })
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Sender {
+public class Taker {
     @Id
-    @SequenceGenerator(name = "sender_id_seq", sequenceName = "sender_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sender_id_seq")
+    @SequenceGenerator(name = "taker_id_seq", sequenceName = "taker_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "taker_id_seq")
     private Long id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String email;
     private Integer age;
-    public Sender(Long id, String name, String email, Integer age) {
+    public Taker(Long id, String name, String email, Integer age) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
     }
-    public Sender(String name, String email, Integer age) {
+    public Taker(String name, String email, Integer age) {
         this.name = name;
         this.email = email;
         this.age = age;
@@ -43,12 +43,12 @@ public class Sender {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Sender sender = (Sender) o;
+        Taker taker = (Taker) o;
 
-        if (!Objects.equals(id, sender.id)) return false;
-        if (!Objects.equals(name, sender.name)) return false;
-        if (!Objects.equals(email, sender.email)) return false;
-        return Objects.equals(age, sender.age);
+        if (!Objects.equals(id, taker.id)) return false;
+        if (!Objects.equals(name, taker.name)) return false;
+        if (!Objects.equals(email, taker.email)) return false;
+        return Objects.equals(age, taker.age);
     }
 
     @Override

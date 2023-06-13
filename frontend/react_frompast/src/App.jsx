@@ -1,18 +1,18 @@
 import SidebarWithHeader from "./components/shared/SideBar.jsx";
 import {Spinner, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
-import {getSenders} from "./services/client.js";
+import {getTakers} from "./services/client.js";
 import CardWithImage from "./components/shared/Card.jsx";
 
 const App = () => {
 
-    const [senders, setSenders] = useState([]);
+    const [takers, setTakers] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
-        getSenders().then(res => {
-            setSenders(res.data);
+        getTakers().then(res => {
+            setTakers(res.data);
             setLoading(false);
         }).catch(err => console.log(err)
         ).finally(() =>
@@ -34,10 +34,10 @@ const App = () => {
         )
     }
 
-    if (senders.length <= 0) {
+    if (takers.length <= 0) {
         return (
             <SidebarWithHeader>
-                <Text>No senders available</Text>
+                <Text>No takers available</Text>
             </SidebarWithHeader>
         )
     }
@@ -45,9 +45,9 @@ const App = () => {
     return (
         <SidebarWithHeader>
             <Wrap justify={"center"} spacing={"30px"}>
-                {senders.map((sender, index) => (
+                {takers.map((taker, index) => (
                     <WrapItem key={index}>
-                        <CardWithImage {...sender}/>
+                        <CardWithImage {...taker}/>
                     </WrapItem>
                 ))}
             </Wrap>

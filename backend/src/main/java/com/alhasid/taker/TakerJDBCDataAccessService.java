@@ -1,4 +1,4 @@
-package com.alhasid.sender;
+package com.alhasid.taker;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -7,50 +7,50 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository("jdbc")
-public class SenderJDBCDataAccessService implements SenderDao {
+public class TakerJDBCDataAccessService implements TakerDao {
     private final JdbcTemplate jdbcTemplate;
-    private final SenderRowMapper senderRowMapper;
+    private final TakerRowMapper takerRowMapper;
 
-    public SenderJDBCDataAccessService(JdbcTemplate jdbcTemplate, SenderRowMapper senderRowMapper) {
+    public TakerJDBCDataAccessService(JdbcTemplate jdbcTemplate, TakerRowMapper takerRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.senderRowMapper = senderRowMapper;
+        this.takerRowMapper = takerRowMapper;
     }
 
     @Override
-    public List<Sender> selectAllSenders() {
+    public List<Taker> selectAllTakers() {
         var sql = """
                 SELECT id, name, email, age
-                FROM sender
+                FROM taker
                 """;
 
-        return jdbcTemplate.query(sql, senderRowMapper);
+        return jdbcTemplate.query(sql, takerRowMapper);
     }
 
     @Override
-    public Optional<Sender> selectSenderById(Long id) {
+    public Optional<Taker> selectTakerById(Long id) {
         var sql = """
                 SELECT id, name, email, age
-                FROM sender
+                FROM taker
                 WHERE id = ?""";
-        return jdbcTemplate.query(sql, senderRowMapper, id)
+        return jdbcTemplate.query(sql, takerRowMapper, id)
                 .stream()
                 .findFirst();
     }
 
     @Override
-    public void insertSender(Sender sender) {
+    public void insertTaker(Taker taker) {
         var sql = """
-                INSERT INTO sender(name, email, age)
+                INSERT INTO taker(name, email, age)
                 VALUES (?, ?, ?)
                 """;
-        jdbcTemplate.update(sql, sender.getName(), sender.getEmail(), sender.getAge());
+        jdbcTemplate.update(sql, taker.getName(), taker.getEmail(), taker.getAge());
     }
 
     @Override
-    public boolean existsSenderWithEmail(String email) {
+    public boolean existsTakerWithEmail(String email) {
         var sql = """
                 SELECT count(id)
-                FROM sender
+                FROM taker
                 WHERE email = ?
                 """;
 
@@ -59,10 +59,10 @@ public class SenderJDBCDataAccessService implements SenderDao {
     }
 
     @Override
-    public void deleteSender(Long id) {
+    public void deleteTaker(Long id) {
         var sql = """
                 DELETE
-                FROM sender
+                FROM taker
                 WHERE id = ?
                 """;
 
@@ -70,31 +70,31 @@ public class SenderJDBCDataAccessService implements SenderDao {
     }
 
     @Override
-    public boolean existsSenderWithId(Long senderId) {
+    public boolean existsTakerWithId(Long takerId) {
         var sql = """
                 SELECT count(id)
-                FROM sender
+                FROM taker
                 WHERE id = ?
                 """;
 
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, senderId);
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, takerId);
         return count != null && count > 0;
     }
 
     @Override
-    public void updateSender(Sender update) {
+    public void updateTaker(Taker update) {
         if (update.getName() != null) {
-            var sql = "UPDATE sender SET name = ? WHERE id = ?";
+            var sql = "UPDATE taker SET name = ? WHERE id = ?";
             jdbcTemplate.update(sql, update.getName(), update.getId());
         }
 
         if (update.getEmail() != null) {
-            var sql = "UPDATE sender SET email = ? WHERE id = ?";
+            var sql = "UPDATE taker SET email = ? WHERE id = ?";
             jdbcTemplate.update(sql, update.getEmail(), update.getId());
         }
 
         if (update.getAge() != null) {
-            var sql = "UPDATE sender SET age = ? WHERE id = ?";
+            var sql = "UPDATE taker SET age = ? WHERE id = ?";
             jdbcTemplate.update(sql, update.getAge(), update.getId());
         }
     }

@@ -1,4 +1,4 @@
-package com.alhasid.sender;
+package com.alhasid.taker;
 
 import com.alhasid.AbstractTestcontainer;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class SenderRepositoryTest extends AbstractTestcontainer {
+class TakerRepositoryTest extends AbstractTestcontainer {
     @Autowired
-    private SenderRepository underTest;
+    private TakerRepository underTest;
 
     @BeforeEach
     void setUp() {
@@ -23,30 +23,30 @@ class SenderRepositoryTest extends AbstractTestcontainer {
     }
 
     @Test
-    void existsSenderByEmail() {
+    void existsTakerByEmail() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 FAKER.name().firstName(),
                 email,
                 20
         );
-        underTest.save(sender);
+        underTest.save(taker);
 
         // When
-        var actual = underTest.existsSenderByEmail(email);
+        var actual = underTest.existsTakerByEmail(email);
 
         // Then
         assertThat(actual).isTrue();
     }
 
     @Test
-    void existsSenderByEmailFailsWhenEmailNotPresent() {
+    void existsTakerByEmailFailsWhenEmailNotPresent() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
 
         // When
-        var actual = underTest.existsSenderByEmail(email);
+        var actual = underTest.existsTakerByEmail(email);
 
         // Then
         assertThat(actual).isFalse();

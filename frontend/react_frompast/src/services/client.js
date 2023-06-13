@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const getSenders = async () => {
+export const getTakers = async () => {
     try {
-        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/senders`)
+        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers`)
     } catch (err){
         throw err
     }

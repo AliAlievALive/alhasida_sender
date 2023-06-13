@@ -1,4 +1,4 @@
-package com.alhasid.sender;
+package com.alhasid.taker;
 
 import com.alhasid.AbstractTestcontainer;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,288 +10,288 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SenderJDBCDataAccessServiceTest extends AbstractTestcontainer {
-    private final SenderRowMapper senderRowMapper = new SenderRowMapper();
-    private SenderJDBCDataAccessService underTest;
+class TakerJDBCDataAccessServiceTest extends AbstractTestcontainer {
+    private final TakerRowMapper takerRowMapper = new TakerRowMapper();
+    private TakerJDBCDataAccessService underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new SenderJDBCDataAccessService(
+        underTest = new TakerJDBCDataAccessService(
                 getJdbcTemplate(),
-                senderRowMapper
+                takerRowMapper
         );
     }
 
     @Test
-    void selectAllSenders() {
+    void selectAllTakers() {
         // Given
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 FAKER.name().firstName(),
                 FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID(),
                 20
         );
-        underTest.insertSender(sender);
+        underTest.insertTaker(taker);
 
         // When
-        List<Sender> actual = underTest.selectAllSenders();
+        List<Taker> actual = underTest.selectAllTakers();
 
         // Then
         assertThat(actual).isNotEmpty();
     }
 
     @Test
-    void selectSenderById() {
+    void selectTakerById() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 FAKER.name().firstName(),
                 email,
                 20
         );
-        underTest.insertSender(sender);
-        Long id = underTest.selectAllSenders()
+        underTest.insertTaker(taker);
+        Long id = underTest.selectAllTakers()
                 .stream()
                 .filter(s -> s.getEmail().equals(email))
-                .map(Sender::getId)
+                .map(Taker::getId)
                 .findFirst()
                 .orElseThrow();
 
         // When
-        Optional<Sender> actual = underTest.selectSenderById(id);
+        Optional<Taker> actual = underTest.selectTakerById(id);
 
         // Then
         assertThat(actual).isPresent().hasValueSatisfying(s -> {
             assertThat(s.getId()).isEqualTo(id);
-            assertThat(s.getName()).isEqualTo(sender.getName());
-            assertThat(s.getEmail()).isEqualTo(sender.getEmail());
-            assertThat(s.getAge()).isEqualTo(sender.getAge());
+            assertThat(s.getName()).isEqualTo(taker.getName());
+            assertThat(s.getEmail()).isEqualTo(taker.getEmail());
+            assertThat(s.getAge()).isEqualTo(taker.getAge());
         });
     }
 
     @Test
-    void willReturnEmptyWhenSelectSenderById() {
+    void willReturnEmptyWhenSelectTakerById() {
         // Given
         long id = 0;
 
         // When
-        var actual = underTest.selectSenderById(id);
+        var actual = underTest.selectTakerById(id);
 
         // Then
         assertThat(actual).isEmpty();
     }
 
     @Test
-    void insertSender() {
+    void insertTaker() {
         // Given
-        int size = underTest.selectAllSenders().size();
-        Sender sender = new Sender(
+        int size = underTest.selectAllTakers().size();
+        Taker taker = new Taker(
                 FAKER.name().firstName(),
                 FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID(),
                 20
         );
-        underTest.insertSender(sender);
+        underTest.insertTaker(taker);
 
         // When
-        int actual = underTest.selectAllSenders().size();
+        int actual = underTest.selectAllTakers().size();
 
         // Then
         assertThat(actual).isEqualTo(size + 1);
     }
 
     @Test
-    void existsSenderWithEmail() {
+    void existsTakerWithEmail() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         String name = FAKER.name().firstName();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 name,
                 email,
                 20
         );
-        underTest.insertSender(sender);
+        underTest.insertTaker(taker);
 
         // When
-        boolean actual = underTest.existsSenderWithEmail(email);
+        boolean actual = underTest.existsTakerWithEmail(email);
 
         // Then
         assertThat(actual).isTrue();
     }
 
     @Test
-    void existsSenderWithEmailReturnsFalseWhenDoesNotExists() {
+    void existsTakerWithEmailReturnsFalseWhenDoesNotExists() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
 
         // When
-        boolean actual = underTest.existsSenderWithEmail(email);
+        boolean actual = underTest.existsTakerWithEmail(email);
 
         // Then
         assertThat(actual).isFalse();
     }
 
     @Test
-    void deleteSender() {
+    void deleteTaker() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         String name = FAKER.name().firstName();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 name,
                 email,
                 20
         );
-        underTest.insertSender(sender);
-        Long id = underTest.selectAllSenders()
+        underTest.insertTaker(taker);
+        Long id = underTest.selectAllTakers()
                 .stream()
                 .filter(s -> s.getEmail().equals(email))
-                .map(Sender::getId)
+                .map(Taker::getId)
                 .findFirst()
                 .orElseThrow();
 
         // When
-        underTest.deleteSender(id);
+        underTest.deleteTaker(id);
 
         // Then
-        assertThat(underTest.selectSenderById(id)).isNotPresent();
+        assertThat(underTest.selectTakerById(id)).isNotPresent();
     }
 
     @Test
-    void existsSenderWithId() {
+    void existsTakerWithId() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         String name = FAKER.name().firstName();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 name,
                 email,
                 20
         );
-        underTest.insertSender(sender);
-        Long id = underTest.selectAllSenders()
+        underTest.insertTaker(taker);
+        Long id = underTest.selectAllTakers()
                 .stream()
                 .filter(s -> s.getEmail().equals(email))
-                .map(Sender::getId)
+                .map(Taker::getId)
                 .findFirst()
                 .orElseThrow();
 
         // When
-        var actual = underTest.existsSenderWithId(id);
+        var actual = underTest.existsTakerWithId(id);
 
         // Then
         assertThat(actual).isTrue();
     }
 
     @Test
-    void existsSenderWithIdReturnsFalseWhenDoesNotExists() {
+    void existsTakerWithIdReturnsFalseWhenDoesNotExists() {
         // Given
         long id = 0;
 
         // When
-        boolean actual = underTest.existsSenderWithId(id);
+        boolean actual = underTest.existsTakerWithId(id);
 
         // Then
         assertThat(actual).isFalse();
     }
 
     @Test
-    void updateSenderName() {
+    void updateTakerName() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         String name = FAKER.name().firstName();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 name,
                 email,
                 20
         );
-        underTest.insertSender(sender);
-        Long id = underTest.selectAllSenders()
+        underTest.insertTaker(taker);
+        Long id = underTest.selectAllTakers()
                 .stream()
                 .filter(s -> s.getEmail().equals(email))
-                .map(Sender::getId)
+                .map(Taker::getId)
                 .findFirst()
                 .orElseThrow();
 
         var newName = "foo";
 
         // When
-        Sender update = new Sender();
+        Taker update = new Taker();
         update.setId(id);
         update.setName(newName);
 
-        underTest.updateSender(update);
+        underTest.updateTaker(update);
 
         // Then
-        assertThat(underTest.selectSenderById(id)).isPresent().hasValueSatisfying(s -> {
+        assertThat(underTest.selectTakerById(id)).isPresent().hasValueSatisfying(s -> {
             assertThat(s.getId()).isEqualTo(id);
             assertThat(s.getName()).isEqualTo(newName);
             assertThat(s.getEmail()).isEqualTo(email);
-            assertThat(s.getAge()).isEqualTo(sender.getAge());
+            assertThat(s.getAge()).isEqualTo(taker.getAge());
         });
     }
 
     @Test
-    void updateSenderEmail() {
+    void updateTakerEmail() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         String name = FAKER.name().firstName();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 name,
                 email,
                 20
         );
-        underTest.insertSender(sender);
-        Long id = underTest.selectAllSenders()
+        underTest.insertTaker(taker);
+        Long id = underTest.selectAllTakers()
                 .stream()
                 .filter(s -> s.getEmail().equals(email))
-                .map(Sender::getId)
+                .map(Taker::getId)
                 .findFirst()
                 .orElseThrow();
 
         var newEmail = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
 
         // When
-        Sender update = new Sender();
+        Taker update = new Taker();
         update.setId(id);
         update.setEmail(newEmail);
 
-        underTest.updateSender(update);
+        underTest.updateTaker(update);
 
         // Then
-        assertThat(underTest.selectSenderById(id)).isPresent().hasValueSatisfying(s -> {
+        assertThat(underTest.selectTakerById(id)).isPresent().hasValueSatisfying(s -> {
             assertThat(s.getId()).isEqualTo(id);
             assertThat(s.getName()).isEqualTo(name);
             assertThat(s.getEmail()).isEqualTo(newEmail);
-            assertThat(s.getAge()).isEqualTo(sender.getAge());
+            assertThat(s.getAge()).isEqualTo(taker.getAge());
         });
     }
 
     @Test
-    void updateSenderAge() {
+    void updateTakerAge() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         String name = FAKER.name().firstName();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 name,
                 email,
                 20
         );
-        underTest.insertSender(sender);
-        Long id = underTest.selectAllSenders()
+        underTest.insertTaker(taker);
+        Long id = underTest.selectAllTakers()
                 .stream()
                 .filter(s -> s.getEmail().equals(email))
-                .map(Sender::getId)
+                .map(Taker::getId)
                 .findFirst()
                 .orElseThrow();
 
         var newAge = 100;
 
         // When
-        Sender update = new Sender();
+        Taker update = new Taker();
         update.setId(id);
         update.setAge(newAge);
 
-        underTest.updateSender(update);
+        underTest.updateTaker(update);
 
         // Then
-        assertThat(underTest.selectSenderById(id)).isPresent().hasValueSatisfying(s -> {
+        assertThat(underTest.selectTakerById(id)).isPresent().hasValueSatisfying(s -> {
             assertThat(s.getId()).isEqualTo(id);
             assertThat(s.getName()).isEqualTo(name);
             assertThat(s.getEmail()).isEqualTo(email);
@@ -300,68 +300,68 @@ class SenderJDBCDataAccessServiceTest extends AbstractTestcontainer {
     }
 
     @Test
-    void willUpdateAllPropertiesSender() {
+    void willUpdateAllPropertiesTaker() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         String name = FAKER.name().firstName();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 name,
                 email,
                 20
         );
-        underTest.insertSender(sender);
-        Long id = underTest.selectAllSenders()
+        underTest.insertTaker(taker);
+        Long id = underTest.selectAllTakers()
                 .stream()
                 .filter(s -> s.getEmail().equals(email))
-                .map(Sender::getId)
+                .map(Taker::getId)
                 .findFirst()
                 .orElseThrow();
 
         int newAge = 100;
 
         // When
-        Sender update = new Sender();
+        Taker update = new Taker();
         update.setId(id);
         update.setAge(newAge);
         update.setEmail(UUID.randomUUID().toString());
         update.setName("foo");
 
-        underTest.updateSender(update);
+        underTest.updateTaker(update);
 
         // Then
-        assertThat(underTest.selectSenderById(id)).isPresent().hasValue(update);
+        assertThat(underTest.selectTakerById(id)).isPresent().hasValue(update);
     }
 
     @Test
-    void willNotUpdateAllPropertiesSender() {
+    void willNotUpdateAllPropertiesTaker() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         String name = FAKER.name().firstName();
-        Sender sender = new Sender(
+        Taker taker = new Taker(
                 name,
                 email,
                 20
         );
-        underTest.insertSender(sender);
-        Long id = underTest.selectAllSenders()
+        underTest.insertTaker(taker);
+        Long id = underTest.selectAllTakers()
                 .stream()
                 .filter(s -> s.getEmail().equals(email))
-                .map(Sender::getId)
+                .map(Taker::getId)
                 .findFirst()
                 .orElseThrow();
 
         // When
-        Sender update = new Sender();
+        Taker update = new Taker();
         update.setId(id);
 
-        underTest.updateSender(update);
+        underTest.updateTaker(update);
 
         // Then
-        assertThat(underTest.selectSenderById(id)).isPresent().hasValueSatisfying(s -> {
+        assertThat(underTest.selectTakerById(id)).isPresent().hasValueSatisfying(s -> {
             assertThat(s.getId()).isEqualTo(id);
-            assertThat(s.getName()).isEqualTo(sender.getName());
-            assertThat(s.getEmail()).isEqualTo(sender.getEmail());
-            assertThat(s.getAge()).isEqualTo(sender.getAge());
+            assertThat(s.getName()).isEqualTo(taker.getName());
+            assertThat(s.getEmail()).isEqualTo(taker.getEmail());
+            assertThat(s.getAge()).isEqualTo(taker.getAge());
         });
     }
 }
