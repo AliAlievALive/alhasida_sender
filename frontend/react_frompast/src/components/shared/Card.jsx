@@ -11,7 +11,8 @@ import {
     useColorModeValue, Tag,
 } from '@chakra-ui/react';
 
-export default function CardWithImage({id, name, email, age}) {
+export default function CardWithImage({name, email, age, gender, imageNumber}) {
+    gender = gender === "MALE" ? "men" : "women";
     return (
         <Center py={6}>
             <Box
@@ -32,9 +33,7 @@ export default function CardWithImage({id, name, email, age}) {
                 <Flex justify={'center'} mt={-12}>
                     <Avatar
                         size={'xl'}
-                        src={
-                            'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
-                        }
+                        src={`https://randomuser.me/api/portraits/${gender}/${imageNumber}.jpg`}
                         alt={'Taker'}
                         css={{
                             border: '2px solid white',
@@ -48,7 +47,7 @@ export default function CardWithImage({id, name, email, age}) {
                             {name}
                         </Heading>
                         <Text color={'gray.500'}>{email}</Text>
-                        <Text color={'gray.500'}>Age {age}</Text>
+                        <Text color={'gray.500'}>Age {age} | {gender}</Text>
                     </Stack>
                 </Box>
             </Box>
