@@ -29,8 +29,8 @@ class TakerRepositoryTest extends AbstractTestcontainer {
         Taker taker = new Taker(
                 FAKER.name().firstName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.save(taker);
 
         // When

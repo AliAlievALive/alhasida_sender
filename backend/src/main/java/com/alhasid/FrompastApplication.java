@@ -1,5 +1,6 @@
 package com.alhasid;
 
+import com.alhasid.taker.Gender;
 import com.alhasid.taker.Taker;
 import com.alhasid.taker.TakerRepository;
 import com.github.javafaker.Faker;
@@ -28,11 +29,14 @@ public class FrompastApplication {
             Name name = faker.name();
             String firstName = name.firstName();
             String lastName = name.lastName();
+            int age = random.nextInt(16, 99);
+            Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
             Taker taker = new Taker(
                     firstName + " " + lastName,
                     firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com",
-                    random.nextInt(16, 99)
-            );
+                    age,
+                    gender);
             takerRepository.save(taker);
         };
     }

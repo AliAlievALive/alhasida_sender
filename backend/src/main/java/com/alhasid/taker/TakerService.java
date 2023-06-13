@@ -33,7 +33,8 @@ public class TakerService {
         Taker taker = new Taker(
                 takerRegistrationRequest.name(),
                 takerRegistrationRequest.email(),
-                takerRegistrationRequest.age());
+                takerRegistrationRequest.age(),
+                takerRegistrationRequest.gender());
         takerDao.insertTaker(taker);
     }
 

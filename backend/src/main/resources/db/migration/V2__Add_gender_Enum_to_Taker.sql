@@ -1,0 +1,2 @@
+ALTER TABLE taker
+ADD COLUMN gender VARCHAR(6) NOT NULL default 'MALE';
