@@ -7,7 +7,6 @@ on:
       - master
     paths:
       - backend/**
-      - frontend/**
 jobs:
   deploy:
     runs-on: ubuntu-latest
