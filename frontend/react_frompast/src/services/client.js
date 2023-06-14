@@ -15,3 +15,11 @@ export const saveTaker = async (taker) => {
         throw err
     }
 };
+
+export const deleteTaker = async (id) => {
+    try {
+        return await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${id}`)
+    } catch (err){
+        throw err
+    }
+};

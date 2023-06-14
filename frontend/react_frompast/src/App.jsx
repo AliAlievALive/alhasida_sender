@@ -63,7 +63,11 @@ const App = () => {
             <Wrap justify={"center"} spacing={"30px"}>
                 {takers.map((taker, index) => (
                     <WrapItem key={index}>
-                        <CardWithImage {...taker} imageNumber={index}/>
+                        <CardWithImage
+                            {...taker}
+                            imageNumber={index}
+                            fetchTakers={fetchTakers}
+                        />
                     </WrapItem>
                 ))}
             </Wrap>
