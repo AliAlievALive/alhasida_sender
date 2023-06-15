@@ -77,7 +77,7 @@ const CreateTakerForm = ({fetchTakers}) => {
                     })
                 }}
             >
-                {({isValid, isSubmitting}, dirty) => (
+                {({dirty, isValid, isSubmitting}) => (
                     <Form>
                         <Stack spacing={"24px"}>
                             <MyTextInput
