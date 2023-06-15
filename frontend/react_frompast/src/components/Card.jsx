@@ -1,25 +1,30 @@
 import {
     AlertDialog,
     AlertDialogBody,
-    AlertDialogContent, AlertDialogFooter, AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
     AlertDialogOverlay,
     Avatar,
-    Box, Button,
+    Box,
+    Button,
     Center,
     Flex,
     Heading,
     Image,
     Stack,
     Text,
-    useColorModeValue, useDisclosure,
+    useColorModeValue,
+    useDisclosure,
 } from '@chakra-ui/react';
 import {useRef} from "react";
-import {deleteTaker} from "../../services/client.js";
-import {errorNotification, successNotification} from "../../services/notification.js";
+import {deleteTaker} from "../services/client.js";
+import {errorNotification, successNotification} from "../services/notification.js";
+import UpdateTakerDrawer from "./UpdateTakerDrawer.jsx";
 
 export default function CardWithImage({id, name, email, age, gender, imageNumber, fetchTakers}) {
     const genderIn = gender === "MALE" ? "men" : "women";
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const {isOpen, onOpen, onClose} = useDisclosure()
     const cancelRef = useRef()
     const handleDelete = () =>
         deleteTaker(id)
@@ -35,10 +40,12 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
     return (
         <Center py={6}>
             <Box
-                maxW={'300px'}
+                maxW={'250px'}
+                minW={'250px'}
                 w={'full'}
+                m={2}
                 bg={useColorModeValue('white', 'gray.800')}
-                boxShadow={'2xl'}
+                boxShadow={'lg'}
                 rounded={'md'}
                 overflow={'hidden'}>
                 <Image
@@ -70,23 +77,31 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                     </Stack>
                 </Box>
 
-                <Stack m={8}>
-                    <Button
-                        mb={3}
-                        bg={'red.400'}
-                        color={'white'}
-                        rounded={'full'}
-                        _hover={{
-                            transform: 'translateY(-2px)',
-                            boxShadow: 'lg'
-                        }}
-                        _focus={{
-                            bg: 'green.500'
-                        }}
-                        onClick={onOpen}
-                    >
-                        Delete
-                    </Button>
+                <Stack direction={'row'} justify={'center'} spacing={6} p={4}>
+                    <Stack>
+                        <UpdateTakerDrawer
+                            initialValues={{name, email, age}}
+                            takerId={id}
+                            fetchTakers={fetchTakers}
+                        />
+                    </Stack>
+                    <Stack>
+                        <Button
+                            bg={'red.400'}
+                            color={'white'}
+                            rounded={'full'}
+                            _hover={{
+                                transform: 'translateY(-2px)',
+                                boxShadow: 'lg'
+                            }}
+                            _focus={{
+                                bg: 'green.500'
+                            }}
+                            onClick={onOpen}
+                        >
+                            Delete
+                        </Button>
+                    </Stack>
 
                     <AlertDialog
                         isOpen={isOpen}

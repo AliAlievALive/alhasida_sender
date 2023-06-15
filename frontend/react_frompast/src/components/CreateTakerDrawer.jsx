@@ -15,15 +15,19 @@ import CreateTakerForm from "./CreateTakerForm.jsx";
 const AddIcon = () => "+";
 const CloseIcon = () => "x";
 
-const DrawerForm = ({fetchTakers}) => {
+const CreateTakerDrawer = ({fetchTakers}) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     return <>
         <Button
             leftIcon={<AddIcon/>}
-            colorScheme={"teal"}
+            bg={'red.400'}
+            _hover={{
+                bg: 'teal.400',
+                color: 'white',
+            }}
             onClick={onOpen}
         >
-            Add taker
+            Add Taker
         </Button>
         <Drawer isOpen={isOpen} onClose={onClose} size={"xl"}>
             <DrawerOverlay/>
@@ -53,4 +57,4 @@ const DrawerForm = ({fetchTakers}) => {
 
 }
 
-export default DrawerForm
+export default CreateTakerDrawer

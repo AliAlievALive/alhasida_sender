@@ -2,8 +2,8 @@ import SidebarWithHeader from "./components/shared/SideBar.jsx";
 import {Spinner, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {getTakers} from "./services/client.js";
-import CardWithImage from "./components/shared/Card.jsx";
-import DrawerForm from "./components/DrawerForm.jsx";
+import CardWithImage from "./components/Card.jsx";
+import CreateTakerDrawer from "./components/CreateTakerDrawer.jsx";
 import {errorNotification} from "./services/notification.js";
 
 const App = () => {
@@ -47,7 +47,7 @@ const App = () => {
     if (err) {
         return (
             <SidebarWithHeader>
-                <DrawerForm
+                <CreateTakerDrawer
                     fetchTakers={fetchTakers}
                 />
                 <Text mt={5}>Oops there was an error</Text>
@@ -57,7 +57,7 @@ const App = () => {
 
     return (
         <SidebarWithHeader>
-            <DrawerForm
+            <CreateTakerDrawer
                 fetchTakers={fetchTakers}
             />
             <Wrap justify={"center"} spacing={"30px"}>

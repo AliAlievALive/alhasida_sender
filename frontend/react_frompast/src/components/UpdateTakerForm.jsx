@@ -1,7 +1,7 @@
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack} from "@chakra-ui/react";
-import {saveTaker} from "../services/client.js";
+import {saveTaker, updateTaker} from "../services/client.js";
 import {errorNotification, successNotification} from "../services/notification.js";
 
 const MyTextInput = ({label, ...props}) => {
@@ -19,31 +19,11 @@ const MyTextInput = ({label, ...props}) => {
     )
 }
 
-const MySelect = ({label, ...props}) => {
-    const [field, meta] = useField(props);
-    return (
-        <Box>
-            <FormLabel htmlFor={props.id || props.name}>{label}</FormLabel>
-            <Select {...field} {...props} />
-            {meta.touched && meta.error ? (
-                <Alert className="error" status={"error"} mt={2}>
-                    <AlertIcon/>{meta.error}
-                </Alert>
-            ) : null}
-        </Box>
-    );
-};
-
-const CreateTakerForm = ({fetchTakers}) => {
+const UpdateTakerForm = ({fetchTakers, initialValues, takerId}) => {
     return (
         <>
             <Formik
-                initialValues={{
-                    name: '',
-                    email: '',
-                    age: 0,
-                    gender: '',
-                }}
+                initialValues={initialValues}
                 validationSchema={Yup.object({
                     name: Yup.string()
                         .max(15, 'Must be 15 characters or less')
@@ -54,21 +34,15 @@ const CreateTakerForm = ({fetchTakers}) => {
                     age: Yup.number()
                         .min(18, 'Must be at least 18 years age')
                         .max(100, 'Must be less than 100 years age')
-                        .required('Required'),
-                    gender: Yup.string()
-                        .oneOf(
-                            ['MALE', 'FEMALE'],
-                            'Invalid gender'
-                        )
-                        .required('Required'),
+                        .required('Required')
                 })}
-                onSubmit={(taker, {setSubmitting}) => {
+                onSubmit={(updatedTaker, {setSubmitting}) => {
                     setSubmitting(true);
-                    saveTaker(taker)
+                    updateTaker(takerId, updatedTaker)
                         .then(r => {
                             console.log(r);
-                            successNotification("Taker saved", `${taker.name} was successfully saved`);
-                            fetchTakers()
+                            successNotification("Taker updated", `${updatedTaker.name} was successfully updated`);
+                            fetchTakers();
                         }).catch(err => {
                         console.log(err);
                         errorNotification(err.code, err.response.data.message)
@@ -77,7 +51,7 @@ const CreateTakerForm = ({fetchTakers}) => {
                     })
                 }}
             >
-                {({isValid, isSubmitting}, dirty) => (
+                {({dirty, isValid, isSubmitting}) => (
                     <Form>
                         <Stack spacing={"24px"}>
                             <MyTextInput
@@ -101,14 +75,7 @@ const CreateTakerForm = ({fetchTakers}) => {
                                 placeholder="18"
                             />
 
-
-                            <MySelect label="Gender" name="gender">
-                                <option value="">Select a job type</option>
-                                <option value="MALE">Male</option>
-                                <option value="FEMALE">Female</option>
-                            </MySelect>
-
-                            <Button isDisabled={!(isValid && dirty) || isSubmitting} type="submit">Submit</Button>
+                            <Button isDisabled={!dirty || !isValid || isSubmitting} type="submit">Submit</Button>
                         </Stack>
                     </Form>
                 )}
@@ -117,4 +84,4 @@ const CreateTakerForm = ({fetchTakers}) => {
     );
 };
 
-export default CreateTakerForm
+export default UpdateTakerForm

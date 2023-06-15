@@ -23,3 +23,11 @@ export const deleteTaker = async (id) => {
         throw err
     }
 };
+
+export const updateTaker = async (id, taker) => {
+    try {
+        return await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${id}`, taker)
+    } catch (err){
+        throw err
+    }
+};
