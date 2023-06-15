@@ -22,7 +22,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taker
     ports:
-      - "8088:8080"
+      - "8080:8080"
     networks:
       - db
     depends_on:
@@ -30,6 +30,18 @@ services:
     restart: unless-stopped
 #    command:
 #      - --spring.datasource.url=jdbc:postgresql://db:5432/taker
+  frontend-react:
+    container_name: frontend-react
+    image: alialiev/frompast-react
+    build:
+      context: frontend/react_frompast
+      args:
+        api_base_url: http://localhost:8088
+    ports:
+      - "3000:5173"
+    depends_on:
+      - alhasid-api
+    restart: unless-stopped
 
 networks:
   db:
