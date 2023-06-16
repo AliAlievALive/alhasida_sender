@@ -3,7 +3,7 @@ version: '0.1'
 services:
   db:
     container_name: taker_db
-    image: postgres:15.1
+    image: postgres:14.7
     environment:
       POSTGRES_USER: alhasida
       POSTGRES_PASSWORD: postgres
@@ -22,7 +22,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taker
     ports:
-      - "8080:8080"
+      - "8088:8080"
     networks:
       - db
     depends_on:
