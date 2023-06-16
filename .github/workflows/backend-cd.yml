@@ -7,13 +7,12 @@ on:
       - master
     paths:
       - backend/**
-      - frontend/**
 jobs:
   deploy:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:14.7
+        image: postgres:15.3
         env:
           POSTGRES_USER: alhasida
           POSTGRES_PASSWORD: postgres
@@ -25,6 +24,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
     steps:
       - name: Send Slack Message
         run: >
@@ -86,18 +86,6 @@ jobs:
           version_description: ${{ github.SHA }}
           region: ${{ secrets.EB_REGION }}
           deployment_package: Dockerrun.aws.json
-      - name: Send Slack Message
-        run: >
-          curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":":githubloading: Commiting to repo https://github.com/AliAlievALive/alhasida_taker"}' 
-          ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Commit and push Dockerrun.aws.json
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add Dockerrun.aws.json
-          git commit -m "Update Dockerrun.aws.json docker image with new tag ${{ steps.build-number.outputs.BUILD_NUMBER }}"
-          git push
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
