@@ -3,7 +3,7 @@ version: '0.1'
 services:
   db:
     container_name: taker_db
-    image: postgres:15.1
+    image: postgres:15.3
     environment:
       POSTGRES_USER: alhasida
       POSTGRES_PASSWORD: postgres
@@ -30,6 +30,18 @@ services:
     restart: unless-stopped
 #    command:
 #      - --spring.datasource.url=jdbc:postgresql://db:5432/taker
+  frontend-react:
+    container_name: frontend-react
+    image: alialiev/frompast-react
+    build:
+      context: frontend/react_frompast
+      args:
+        api_base_url: http://localhost:8088
+    ports:
+      - "3000:5173"
+    depends_on:
+      - alhasid-api
+    restart: unless-stopped
 
 networks:
   db:
