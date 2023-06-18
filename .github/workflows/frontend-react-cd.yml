@@ -6,13 +6,13 @@ on:
     branches:
       - master
     paths:
-      - frontend/react_frompast/**
+      - frontend/**
 jobs:
   deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ././frontend/react_frompast
+        working-directory: ../../frontend/react_frompast
 
     steps:
       - name: Send Slack Message
