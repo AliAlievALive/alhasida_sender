@@ -33,11 +33,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Docker build and push
         run: |
-          chmod +x ../../.ci/build-publish.sh
+          chmod +x .ci/build-publish.sh
           USERNAME=alialiev \
           REPO=frompast-react \
           TAG=${{ steps.build-number.outputs.BUILD_NUMBER }} \
-          ../../.ci/build-publish.sh . \
+          .ci/build-publish.sh . \
             --build-arg api_base_url=http://:8080
       - name: Send Slack Message
         run: >
@@ -47,7 +47,7 @@ jobs:
       - name: Update Dockerrun.aws.json react image tag with new build number
         run: |
           echo "Dockerrun.aws.json before updating tag"
-          cat ../../Dockerrun.aws.json
+          cat Dockerrun.aws.json
           sed -i -E 's_(alialiev/frompast-react:)([^"]*)_\1'${{steps.build-number.outputs.BUILD_NUMBER}}'_' Dockerrun.aws.json
           echo "Dockerrun.aws.json after updating tag"
-          cat ../../Dockerrun.aws.json
+          cat Dockerrun.aws.json
