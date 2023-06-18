@@ -18,7 +18,6 @@ services:
   alhasid-api:
     container_name: alhasid-api
     image: alialiev/frompast
-#    можно так подключаться к бд, а можно через command, что закомментирован ниже
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taker
     ports:
@@ -28,8 +27,6 @@ services:
     depends_on:
       - db
     restart: unless-stopped
-#    command:
-#      - --spring.datasource.url=jdbc:postgresql://db:5432/taker
   frontend-react:
     container_name: frontend-react
     image: alialiev/frompast-react
