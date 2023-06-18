@@ -35,7 +35,7 @@ const UpdateTakerDrawer = ({fetchTakers, initialValues, takerId}) => {
             }}
             onClick={onOpen}
         >
-            Update taker
+            Update
         </Button>
         <Drawer isOpen={isOpen} onClose={onClose} size={"xl"}>
             <DrawerOverlay/>

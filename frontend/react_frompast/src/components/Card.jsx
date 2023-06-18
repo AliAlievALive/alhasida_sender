@@ -123,7 +123,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                                         Cancel
                                     </Button>
                                     <Button colorScheme='red' onClick={handleDelete} ml={3}>
-                                        Delete
+                                        Delete {name}
                                     </Button>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
