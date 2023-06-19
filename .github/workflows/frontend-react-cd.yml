@@ -2,9 +2,9 @@ name: CD - Deploy React Frontend
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     branches:
-      - master
+      - frontendCD
     paths:
       - frontend/**
 jobs:
@@ -32,13 +32,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Docker build and push
-        working-directory: ./frontend/react_frompast
         run: |
           chmod +x .ci/build-publish.sh
           USERNAME=alialiev \
           REPO=frompast-react \
           TAG=${{ steps.build-number.outputs.BUILD_NUMBER }} \
-          .ci/build-publish.sh . \
+          .ci/build-publish.sh ./frontend/react_frompast \
           --build-arg api_base_url=http://taker-api-env.eba-sebhiqx6.eu-central-1.elasticbeanstalk.com:8080
       - name: Send Slack Message
         run: >

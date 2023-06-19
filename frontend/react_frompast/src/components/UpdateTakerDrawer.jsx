@@ -58,7 +58,7 @@ const UpdateTakerDrawer = ({fetchTakers, initialValues, takerId}) => {
                             type='submit'
                             form='my-form'
                     >
-                        Close
+                        Cancel
                     </Button>
                 </DrawerFooter>
             </DrawerContent>
