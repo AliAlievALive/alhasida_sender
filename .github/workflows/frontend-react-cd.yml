@@ -32,6 +32,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Docker build and push
+        working-directory: ./frontend/react_frompast
         run: |
           chmod +x .ci/build-publish.sh
           USERNAME=alialiev \
