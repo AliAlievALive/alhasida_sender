@@ -2,7 +2,7 @@ name: CD - Deploy React Frontend
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     branches:
       - frontend
     paths:
