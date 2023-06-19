@@ -30,6 +30,7 @@ public class TakerService {
         if (takerDao.existsTakerWithEmail(email)) {
             throw new DuplicateResourceException("email already taken");
         }
+
         Taker taker = new Taker(
                 takerRegistrationRequest.name(),
                 takerRegistrationRequest.email(),
