@@ -34,11 +34,7 @@ jobs:
       - name: Docker build and push
         run: |
           chmod +x .ci/build-publish.sh
-          USERNAME=alialiev \
-          REPO=frompast-react \
-          TAG=${{ steps.build-number.outputs.BUILD_NUMBER }} \
-          .ci/build-publish.sh . \
-            --build-arg api_base_url=http://localhost:8080
+          USERNAME=alialiev REPO=frompast-react TAG=${{ steps.build-number.outputs.BUILD_NUMBER }} .ci/build-publish.sh . --build-arg api_base_url=http://localhost:8080
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
