@@ -1,9 +1,6 @@
 package com.alhasid.taker;
 
-import com.alhasid.jwt.JWTUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +10,6 @@ import java.util.List;
 @RequestMapping("api/v1/takers")
 public class TakerController {
     private final TakerService takerService;
-    private JWTUtil jwtUtil;
 
     @GetMapping
     public List<Taker> getTakers() {
@@ -26,12 +22,8 @@ public class TakerController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registrationTaker(@RequestBody TakerRegistrationRequest request) {
-        takerService.addTaker(request);
-        String jwtToken = jwtUtil.issueToken(request.email(), "ROLE_USER");
-        return ResponseEntity.ok()
-                .header(HttpHeaders.AUTHORIZATION, jwtToken)
-                .build();
+    public void registrationTaker(@RequestBody TakerRegistrationRequest takerRegistrationRequest) {
+        takerService.addTaker(takerRegistrationRequest);
     }
 
     @DeleteMapping("{id}")
