@@ -200,14 +200,14 @@
                     <from>
                         <image>eclipse-temurin:17</image>
                         <platforms>
-                            <pletform>
+                            <platform>
                                 <architecture>arm64</architecture>
                                 <os>linux</os>
-                            </pletform>
-                            <pletform>
+                            </platform>
+                            <platform>
                                 <architecture>amd64</architecture>
                                 <os>linux</os>
-                            </pletform>
+                            </platform>
                             <platform>
                                 <architecture>amd64</architecture>
                                 <os>windows</os>
