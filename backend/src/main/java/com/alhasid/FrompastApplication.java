@@ -1,8 +1,9 @@
 package com.alhasid;
 
+import com.alhasid.sender.Sender;
+import com.alhasid.sender.SenderRepository;
 import com.alhasid.taker.Gender;
 import com.alhasid.taker.Taker;
-import com.alhasid.taker.TakerRepository;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
@@ -22,7 +24,7 @@ public class FrompastApplication {
     }
 
     @Bean
-    CommandLineRunner runner(TakerRepository takerRepository) throws NoSuchAlgorithmException {
+    CommandLineRunner runner(SenderRepository senderRepository) throws NoSuchAlgorithmException {
         Random random = SecureRandom.getInstanceStrong();
         return args -> {
             Faker faker = new Faker();
@@ -32,12 +34,15 @@ public class FrompastApplication {
             int age = random.nextInt(16, 99);
             Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
+            Sender sender = new Sender(faker.internet().emailAddress());
             Taker taker = new Taker(
                     firstName + " " + lastName,
                     firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com",
                     age,
-                    gender);
-            takerRepository.save(taker);
+                    gender,
+                    sender);
+            sender.setTakers(List.of(taker));
+            senderRepository.save(sender);
         };
     }
 }

@@ -1,9 +1,9 @@
-package com.alhasid.taker;
+package com.alhasid.sender;
 
 import com.alhasid.exception.DuplicateResourceException;
 import com.alhasid.exception.RequestValidationException;
 import com.alhasid.exception.ResourceNotFoundException;
-import com.alhasid.sender.Sender;
+import com.alhasid.taker.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

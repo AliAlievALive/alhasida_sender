@@ -1,4 +1,6 @@
 package com.alhasid.taker;
 
-public record TakerRegistrationRequest(String name, String email, Integer age, Gender gender) {
+import com.alhasid.sender.Sender;
+
+public record TakerRegistrationRequest(String name, String email, Integer age, Gender gender, Sender sender) {
 }

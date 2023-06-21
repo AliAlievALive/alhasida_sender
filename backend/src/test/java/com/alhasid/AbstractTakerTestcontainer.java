@@ -14,7 +14,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import javax.sql.DataSource;
 
 @Testcontainers
-public abstract class AbstractTestcontainer {
+public abstract class AbstractTakerTestcontainer {
     @BeforeAll
     static void beforeAll() {
         Flyway flyway = Flyway.configure().dataSource(
