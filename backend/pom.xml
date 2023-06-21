@@ -126,14 +126,17 @@
                 <executions>
                     <execution>
                         <id>pre-integration-test</id>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
                         <configuration>
-                            <arguments>
-                                <argument>--server.port=${tomcat.http.port}</argument>
-                            </arguments>
+                            <skip>true</skip>
                         </configuration>
+<!--                        <goals>-->
+<!--                            <goal>start</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <arguments>-->
+<!--                                <argument>&#45;&#45;server.port=${tomcat.http.port}</argument>-->
+<!--                            </arguments>-->
+<!--                        </configuration>-->
                     </execution>
                     <execution>
                         <id>post-integration-test</id>
