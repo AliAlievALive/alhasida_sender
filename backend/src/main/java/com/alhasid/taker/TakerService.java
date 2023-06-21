@@ -1,7 +1,7 @@
 package com.alhasid.taker;
 
-import com.alhasid.exception.RequestValidationException;
 import com.alhasid.exception.DuplicateResourceException;
+import com.alhasid.exception.RequestValidationException;
 import com.alhasid.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,9 @@ public class TakerService {
                 takerRegistrationRequest.name(),
                 takerRegistrationRequest.email(),
                 takerRegistrationRequest.age(),
-                takerRegistrationRequest.gender());
+                takerRegistrationRequest.gender(),
+                takerRegistrationRequest.sender()
+                );
         takerDao.insertTaker(taker);
     }
 

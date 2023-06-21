@@ -1,22 +1,24 @@
-package com.alhasid.taker;
+package com.alhasid.sender;
 
-import com.alhasid.AbstractTakerTestcontainer;
-import com.alhasid.sender.Sender;
+import com.alhasid.AbstractSenderTestcontainer;
+import com.alhasid.taker.Gender;
+import com.alhasid.taker.Taker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class TakerRepositoryTest extends AbstractTakerTestcontainer {
+class SenderRepositoryTest extends AbstractSenderTestcontainer {
     @Autowired
-    private TakerRepository underTest;
+    private SenderRepository underTest;
 
     @BeforeEach
     void setUp() {
@@ -24,32 +26,28 @@ class TakerRepositoryTest extends AbstractTakerTestcontainer {
     }
 
     @Test
-    void existsTakerByEmail() {
+    void existsSenderByEmail() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Sender sender = new Sender("test@t.com");
-        Taker taker = new Taker(
-                FAKER.name().firstName(),
-                email,
-                20,
-                Gender.MALE,
-                sender);
-        underTest.save(taker);
+        Taker taker = new Taker(FAKER.name().firstName(), email, 20, Gender.MALE);
+        Sender sender = new Sender(email, List.of(taker));
+        taker.setSender(sender);
+        underTest.save(sender);
 
         // When
-        var actual = underTest.existsTakerByEmail(email);
+        var actual = underTest.existsSenderByEmail(email);
 
         // Then
         assertThat(actual).isTrue();
     }
 
     @Test
-    void existsTakerByEmailFailsWhenEmailNotPresent() {
+    void existsSenderByEmailFailsWhenEmailNotPresent() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
 
         // When
-        var actual = underTest.existsTakerByEmail(email);
+        var actual = underTest.existsSenderByEmail(email);
 
         // Then
         assertThat(actual).isFalse();

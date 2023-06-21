@@ -1,12 +1,10 @@
 package com.alhasid.taker;
 
+import com.alhasid.sender.Sender;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
-import java.util.Objects;
 
 @Entity
 @Table(name = "taker", uniqueConstraints = {
@@ -14,7 +12,6 @@ import java.util.Objects;
 })
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Taker {
     @Id
@@ -29,6 +26,18 @@ public class Taker {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "sender_id", nullable = false)
+    private Sender sender;
+    public Taker(Long id, String name, String email, Integer age, Gender gender, Sender sender) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.gender = gender;
+        this.sender = sender;
+    }
+
     public Taker(Long id, String name, String email, Integer age, Gender gender) {
         this.id = id;
         this.name = name;
@@ -36,6 +45,15 @@ public class Taker {
         this.age = age;
         this.gender = gender;
     }
+
+    public Taker(String name, String email, Integer age, Gender gender, Sender sender) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.gender = gender;
+        this.sender = sender;
+    }
+
     public Taker(String name, String email, Integer age, Gender gender) {
         this.name = name;
         this.email = email;
@@ -50,20 +68,35 @@ public class Taker {
 
         Taker taker = (Taker) o;
 
-        if (!Objects.equals(id, taker.id)) return false;
+        if (!id.equals(taker.id)) return false;
         if (!name.equals(taker.name)) return false;
         if (!email.equals(taker.email)) return false;
-        if (!Objects.equals(age, taker.age)) return false;
-        return gender == taker.gender;
+        if (!age.equals(taker.age)) return false;
+        if (gender != taker.gender) return false;
+        return sender.equals(taker.sender);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = id.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + email.hashCode();
-        result = 31 * result + (age != null ? age.hashCode() : 0);
-        result = 31 * result + gender.hashCode();
+        result = 31 * result + age.hashCode();
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + sender.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Taker{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", sender={id=" + sender.getId() +
+                "; email=" + sender.getEmail() + "}" +
+                '}';
     }
 }

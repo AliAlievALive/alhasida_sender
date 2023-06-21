@@ -17,10 +17,11 @@ public class SecurityFilterChainConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests ->
                         requests
-                                .requestMatchers(HttpMethod.POST, "api/v1/senders")
+                                .requestMatchers(HttpMethod.POST, "/api/v1/senders")
                                 .permitAll()
                                 .anyRequest()
-                                .authenticated())
+                                .authenticated()
+                )
                 .build();
     }
 }

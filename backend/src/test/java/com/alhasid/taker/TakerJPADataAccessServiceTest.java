@@ -1,5 +1,6 @@
 package com.alhasid.taker;
 
+import com.alhasid.sender.Sender;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,7 @@ class TakerJPADataAccessServiceTest {
     @Test
     void insertTaker() {
         // Given
-        Taker taker = new Taker("Ali", "ali@mail.ru", 20, Gender.MALE);
+        Taker taker = new Taker("Ali", "ali@mail.ru", 20, Gender.MALE, new Sender("test@t.com"));
 
         // When
         underTest.insertTaker(taker);
@@ -97,7 +98,7 @@ class TakerJPADataAccessServiceTest {
     @Test
     void updateTaker() {
         // Given
-        Taker taker = new Taker("Ali", "ali@mail.ru", 20, Gender.MALE);
+        Taker taker = new Taker("Ali", "ali@mail.ru", 20, Gender.MALE, new Sender("test@t.com"));
 
         // When
         underTest.updateTaker(taker);

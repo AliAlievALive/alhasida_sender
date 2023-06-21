@@ -1,5 +1,6 @@
 package com.alhasid.taker;
 
+import com.alhasid.sender.Sender;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -12,11 +13,11 @@ public class TakerListDataAccessService implements TakerDao {
 
     {
         takers = new ArrayList<>();
-        Taker alex = new Taker(1L, "Alex", "alex@gamil.com", 32, Gender.MALE);
+        Taker alex = new Taker(1L, "Alex", "alex@gamil.com", 32, Gender.MALE, new Sender("test@t.com"));
         takers.add(alex);
-        Taker alim = new Taker(2L, "Alim", "alim@gamil.com", 9, Gender.MALE);
+        Taker alim = new Taker(2L, "Alim", "alim@gamil.com", 9, Gender.MALE, new Sender("test1@t.com"));
         takers.add(alim);
-        Taker hava = new Taker(3L, "Hava", "hava@gamil.com", 7, Gender.FEMALE);
+        Taker hava = new Taker(3L, "Hava", "hava@gamil.com", 7, Gender.FEMALE, new Sender("test2@t.com"));
         takers.add(hava);
     }
 

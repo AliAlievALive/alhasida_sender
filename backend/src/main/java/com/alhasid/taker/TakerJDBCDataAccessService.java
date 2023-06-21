@@ -19,7 +19,7 @@ public class TakerJDBCDataAccessService implements TakerDao {
     @Override
     public List<Taker> selectAllTakers() {
         var sql = """
-                SELECT id, name, email, age, gender
+                SELECT id, name, email, age, gender, sender_id
                 FROM taker
                 """;
 
@@ -29,7 +29,7 @@ public class TakerJDBCDataAccessService implements TakerDao {
     @Override
     public Optional<Taker> selectTakerById(Long id) {
         var sql = """
-                SELECT id, name, email, age, gender
+                SELECT id, name, email, age, gender, sender_id
                 FROM taker
                 WHERE id = ?""";
         return jdbcTemplate.query(sql, takerRowMapper, id)

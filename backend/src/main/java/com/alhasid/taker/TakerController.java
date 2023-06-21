@@ -17,7 +17,7 @@ public class TakerController {
     }
 
     @GetMapping("{id}")
-    public Taker takers(@PathVariable Long id) {
+    public Taker getTaker(@PathVariable Long id) {
         return takerService.getTaker(id);
     }
 
