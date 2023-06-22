@@ -6,7 +6,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +21,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Sender {
+public class Sender implements UserDetails {
     @Id
     @SequenceGenerator(name = "sender_id_seq", sequenceName = "sender_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sender_id_seq")
@@ -29,23 +33,30 @@ public class Sender {
     @JsonManagedReference
     private List<Taker> takers;
 
-    public Sender(long id, String email) {
+    @Column(nullable = false)
+    private String password;
+
+    public Sender(long id, String email, String password) {
         this.id = id;
         this.email = email;
+        this.password = password;
     }
 
-    public Sender(String email) {
+    public Sender(String email, String password) {
         this.email = email;
+        this.password = password;
     }
 
-    public Sender(String email, List<Taker> takers) {
+    public Sender(String email, String password, List<Taker> takers) {
         this.email = email;
+        this.password = password;
         this.takers = takers;
     }
 
-    public Sender(Long id, String email, List<Taker> takers) {
+    public Sender(Long id, String email, String password, List<Taker> takers) {
         this.id = id;
         this.email = email;
+        this.password = password;
         this.takers = takers;
     }
 
@@ -55,6 +66,7 @@ public class Sender {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", takers=" + takers +
+                ", password='" + password + '\'' +
                 '}';
     }
 
@@ -76,5 +88,40 @@ public class Sender {
         result = 31 * result + email.hashCode();
         result = 31 * result + (takers != null ? takers.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

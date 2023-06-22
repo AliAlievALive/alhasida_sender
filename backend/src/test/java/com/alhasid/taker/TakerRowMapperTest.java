@@ -23,7 +23,7 @@ class TakerRowMapperTest {
         when(resultSet.getString("name")).thenReturn("Ali");
         when(resultSet.getString("email")).thenReturn("ali@test.ru");
         when(resultSet.getString("gender")).thenReturn("MALE");
-        Sender sender = new Sender("");
+        Sender sender = new Sender("", "pass");
         sender.setId(resultSet.getLong("sender_id"));
         when(resultSet.getObject("sender_id")).thenReturn(sender);
 

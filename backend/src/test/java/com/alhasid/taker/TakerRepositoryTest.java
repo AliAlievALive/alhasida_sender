@@ -27,7 +27,7 @@ class TakerRepositoryTest extends AbstractTakerTestcontainer {
     void existsTakerByEmail() {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Sender sender = new Sender("test@t.com");
+        Sender sender = new Sender("test@t.com", "pass");
         Taker taker = new Taker(
                 FAKER.name().firstName(),
                 email,

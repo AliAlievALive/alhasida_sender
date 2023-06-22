@@ -13,11 +13,11 @@ public class TakerListDataAccessService implements TakerDao {
 
     {
         takers = new ArrayList<>();
-        Taker alex = new Taker(1L, "Alex", "alex@gamil.com", 32, Gender.MALE, new Sender("test@t.com"));
+        Taker alex = new Taker(1L, "Alex", "alex@gamil.com", 32, Gender.MALE, new Sender("test@t.com", "pass"));
         takers.add(alex);
-        Taker alim = new Taker(2L, "Alim", "alim@gamil.com", 9, Gender.MALE, new Sender("test1@t.com"));
+        Taker alim = new Taker(2L, "Alim", "alim@gamil.com", 9, Gender.MALE, new Sender("test1@t.com", "pass"));
         takers.add(alim);
-        Taker hava = new Taker(3L, "Hava", "hava@gamil.com", 7, Gender.FEMALE, new Sender("test2@t.com"));
+        Taker hava = new Taker(3L, "Hava", "hava@gamil.com", 7, Gender.FEMALE, new Sender("test2@t.com", "pass"));
         takers.add(hava);
     }
 

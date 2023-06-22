@@ -30,7 +30,7 @@ class SenderRepositoryTest extends AbstractSenderTestcontainer {
         // Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         Taker taker = new Taker(FAKER.name().firstName(), email, 20, Gender.MALE);
-        Sender sender = new Sender(email, List.of(taker));
+        Sender sender = new Sender(email, "pass", List.of(taker));
         taker.setSender(sender);
         underTest.save(sender);
 

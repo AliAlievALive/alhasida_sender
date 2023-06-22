@@ -34,7 +34,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID(),
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
 
@@ -54,7 +54,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 email,
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
         Long id = underTest.selectAllTakers()
@@ -97,7 +97,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID(),
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
 
@@ -118,7 +118,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 email,
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
 
@@ -151,7 +151,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 email,
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
         Long id = underTest.selectAllTakers()
@@ -177,7 +177,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 name,
                 email,
                 20,
-                Gender.MALE, new Sender("test@t.com"));
+                Gender.MALE, new Sender("test@t.com", "pass"));
         underTest.insertTaker(taker);
         Long id = underTest.selectAllTakers()
                 .stream()
@@ -215,7 +215,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 email,
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
         Long id = underTest.selectAllTakers()
@@ -253,7 +253,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 email,
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
         Long id = underTest.selectAllTakers()
@@ -291,7 +291,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 email,
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
         Long id = underTest.selectAllTakers()
@@ -329,7 +329,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 email,
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
         Long id = underTest.selectAllTakers()
@@ -371,7 +371,7 @@ class TakerJDBCDataAccessServiceTest extends AbstractTakerTestcontainer {
                 email,
                 20,
                 Gender.MALE,
-                new Sender("test@t.com")
+                new Sender("test@t.com", "pass")
         );
         underTest.insertTaker(taker);
         Long id = underTest.selectAllTakers()

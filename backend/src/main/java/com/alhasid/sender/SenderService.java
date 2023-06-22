@@ -20,7 +20,7 @@ public class SenderService {
         if (senderDao.existsSenderWithEmail(email)) {
             throw new DuplicateResourceException("email already taken");
         }
-        senderDao.insertSender(new Sender(request.email()));
+        senderDao.insertSender(new Sender(request.email(), "pass"));
     }
 
     public List<Sender> getAllSenders() {

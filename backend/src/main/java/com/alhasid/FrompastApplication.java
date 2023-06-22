@@ -34,7 +34,7 @@ public class FrompastApplication {
             int age = random.nextInt(16, 99);
             Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
-            Sender sender = new Sender(faker.internet().emailAddress());
+            Sender sender = new Sender(faker.internet().emailAddress(), "pass");
             Taker taker = new Taker(
                     firstName + " " + lastName,
                     firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com",

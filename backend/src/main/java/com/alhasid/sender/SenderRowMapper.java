@@ -19,7 +19,10 @@ public class SenderRowMapper implements RowMapper<Sender> {
 
     @Override
     public Sender mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Sender sender = new Sender(rs.getLong("id"), rs.getString("email"));
+        Sender sender = new Sender(
+                rs.getLong("id"),
+                rs.getString("email"),
+                rs.getString("pass"));
         List<Taker> takers = repository.getTakersBySenderId(sender.getId());
         sender.setTakers(takers);
         return sender;
