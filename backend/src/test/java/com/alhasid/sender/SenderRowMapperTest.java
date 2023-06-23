@@ -31,7 +31,7 @@ class SenderRowMapperTest {
         Sender actual = senderRowMapper.mapRow(resultSet, 1);
 
         // Then
-        Sender expected = new Sender(1L, "ali@test.ru", List.of(taker));
+        Sender expected = new Sender(1L, "ali@test.ru", "pass", List.of(taker));
         assertThat(actual).isEqualTo(expected);
     }
 }

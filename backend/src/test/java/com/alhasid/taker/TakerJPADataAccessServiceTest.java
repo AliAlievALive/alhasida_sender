@@ -50,7 +50,7 @@ class TakerJPADataAccessServiceTest {
     @Test
     void insertTaker() {
         // Given
-        Taker taker = new Taker("Ali", "ali@mail.ru", 20, Gender.MALE, new Sender("test@t.com"));
+        Taker taker = new Taker("Ali", "ali@mail.ru", 20, Gender.MALE, new Sender("test@t.com", "pass"));
 
         // When
         underTest.insertTaker(taker);
@@ -98,7 +98,7 @@ class TakerJPADataAccessServiceTest {
     @Test
     void updateTaker() {
         // Given
-        Taker taker = new Taker("Ali", "ali@mail.ru", 20, Gender.MALE, new Sender("test@t.com"));
+        Taker taker = new Taker("Ali", "ali@mail.ru", 20, Gender.MALE, new Sender("test@t.com", "pass"));
 
         // When
         underTest.updateTaker(taker);

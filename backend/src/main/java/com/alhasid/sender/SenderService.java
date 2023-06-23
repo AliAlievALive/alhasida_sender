@@ -3,6 +3,7 @@ package com.alhasid.sender;
 import com.alhasid.exception.DuplicateResourceException;
 import com.alhasid.exception.RequestValidationException;
 import com.alhasid.exception.ResourceNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.List;
 @Service
 public class SenderService {
     private final SenderDao senderDao;
+    private final PasswordEncoder passwordEncoder;
 
-    public SenderService(SenderDao senderDao) {
+    public SenderService(SenderDao senderDao, PasswordEncoder passwordEncoder) {
         this.senderDao = senderDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void addSender(SenderRegistrationRequest request) {
@@ -20,7 +23,7 @@ public class SenderService {
         if (senderDao.existsSenderWithEmail(email)) {
             throw new DuplicateResourceException("email already taken");
         }
-        senderDao.insertSender(new Sender(request.email()));
+        senderDao.insertSender(new Sender(request.email(), passwordEncoder.encode(request.password())));
     }
 
     public List<Sender> getAllSenders() {
@@ -48,6 +51,13 @@ public class SenderService {
                 throw new DuplicateResourceException("email already taken");
             }
             sender.setEmail(updateRequest.email());
+            changed = true;
+        }
+
+        if (updateRequest.password() != null &&
+                !passwordEncoder.encode(updateRequest.password())
+                        .equals(passwordEncoder.encode(sender.getPassword()))) {
+            sender.setPassword(passwordEncoder.encode(updateRequest.password()));
             changed = true;
         }
 

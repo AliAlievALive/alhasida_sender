@@ -40,7 +40,7 @@ class TakerServiceTest {
     void canGetTaker() {
         // Given
         long id = 10;
-        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com"));
+        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com", "pass"));
         when(takerDao.selectTakerById(id)).thenReturn(Optional.of(taker));
 
         // When
@@ -135,7 +135,7 @@ class TakerServiceTest {
     void canUpdateTakerAllProperties() {
         // Given
         long id = 10;
-        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com"));
+        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com", "pass"));
         when(takerDao.selectTakerById(id)).thenReturn(Optional.of(taker));
         String newEmail = "alih@mail.ru";
         TakerUpdateRequest updateRequest = new TakerUpdateRequest("Alihandro", newEmail, 22);
@@ -159,7 +159,7 @@ class TakerServiceTest {
     void canUpdateOnlyTakerName() {
         // Given
         long id = 10;
-        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com"));
+        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com", "pass"));
         when(takerDao.selectTakerById(id)).thenReturn(Optional.of(taker));
         TakerUpdateRequest updateRequest = new TakerUpdateRequest("Alihandro", null, null);
 
@@ -180,7 +180,7 @@ class TakerServiceTest {
     void canUpdateOnlyTakerEmail() {
         // Given
         long id = 10;
-        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com"));
+        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com", "pass"));
         when(takerDao.selectTakerById(id)).thenReturn(Optional.of(taker));
         String newEmail = "alih@mail.ru";
         TakerUpdateRequest updateRequest = new TakerUpdateRequest(null, newEmail, null);
@@ -202,7 +202,7 @@ class TakerServiceTest {
     void canUpdateOnlyTakerAge() {
         // Given
         long id = 10;
-        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com"));
+        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com", "pass"));
         when(takerDao.selectTakerById(id)).thenReturn(Optional.of(taker));
         TakerUpdateRequest updateRequest = new TakerUpdateRequest(null, null, 35);
 
@@ -223,7 +223,7 @@ class TakerServiceTest {
     void willThrowWhenTryingUpdateTakerEmailWhenAlreadyTaken() {
         // Given
         long id = 10;
-        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com"));
+        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com", "pass"));
         when(takerDao.selectTakerById(id)).thenReturn(Optional.of(taker));
         String newEmail = "alih@mail.ru";
         TakerUpdateRequest updateRequest = new TakerUpdateRequest("Alihandro", newEmail, 22);
@@ -243,7 +243,7 @@ class TakerServiceTest {
     void willThrowWhenUpdateTakerHasNotChanges() {
         // Given
         long id = 10;
-        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com"));
+        Taker taker = new Taker(id, "Ali", "ali@test.com", 20, Gender.MALE, new Sender("test@t.com", "pass"));
         when(takerDao.selectTakerById(id)).thenReturn(Optional.of(taker));
         TakerUpdateRequest updateRequest = new TakerUpdateRequest(
                 taker.getName(),

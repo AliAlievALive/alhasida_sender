@@ -16,7 +16,7 @@ public class TakerRowMapper implements RowMapper<Taker> {
 
     @Override
     public Taker mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Sender sender = senderRepository.findById(rs.getLong("sender_id")).orElse(new Sender(0, ""));
+        Sender sender = senderRepository.findById(rs.getLong("sender_id")).orElse(new Sender(0, "", ""));
         return new Taker(
                 rs.getLong("id"),
                 rs.getString("name"),

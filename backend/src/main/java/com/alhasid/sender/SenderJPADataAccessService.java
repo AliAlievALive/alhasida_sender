@@ -45,4 +45,9 @@ public class SenderJPADataAccessService implements SenderDao {
     public void updateSender(Sender sender) {
         senderRepository.save(sender);
     }
+
+    @Override
+    public Optional<Sender> selectUserByEmail(String email) {
+        return senderRepository.findUserByEmail(email);
+    }
 }

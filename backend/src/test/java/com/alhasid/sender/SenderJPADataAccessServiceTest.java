@@ -53,7 +53,7 @@ class SenderJPADataAccessServiceTest {
     @Test
     void insertSender() {
         // Given
-        Sender sender = new Sender("ali@mail.ru", List.of(new Taker("Ali", "ali@mail.ru", 20, Gender.MALE)));
+        Sender sender = new Sender("ali@mail.ru", "pass", List.of(new Taker("Ali", "ali@mail.ru", 20, Gender.MALE)));
 
         // When
         underTest.insertSender(sender);
@@ -101,7 +101,7 @@ class SenderJPADataAccessServiceTest {
     @Test
     void updateSender() {
         // Given
-        Sender sender = new Sender("ali@mail.ru", List.of(new Taker("Ali", "ali@mail.ru", 20, Gender.MALE)));
+        Sender sender = new Sender("ali@mail.ru", "pass", List.of(new Taker("Ali", "ali@mail.ru", 20, Gender.MALE)));
 
         // When
         underTest.updateSender(sender);

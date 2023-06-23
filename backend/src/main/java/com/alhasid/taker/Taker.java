@@ -1,6 +1,7 @@
 package com.alhasid.taker;
 
 import com.alhasid.sender.Sender;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Taker {
     private Gender gender;
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "sender_id", nullable = false)
+    @JsonBackReference
     private Sender sender;
     public Taker(Long id, String name, String email, Integer age, Gender gender, Sender sender) {
         this.id = id;
@@ -95,8 +97,7 @@ public class Taker {
                 ", email='" + email + '\'' +
                 ", age=" + age +
                 ", gender=" + gender +
-                ", sender={id=" + sender.getId() +
-                "; email=" + sender.getEmail() + "}" +
+                ", sender=" + sender +
                 '}';
     }
 }
