@@ -3,6 +3,7 @@ package com.alhasid.sender;
 import com.alhasid.exception.DuplicateResourceException;
 import com.alhasid.exception.RequestValidationException;
 import com.alhasid.exception.ResourceNotFoundException;
+import com.alhasid.taker.Gender;
 import com.alhasid.taker.Taker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,10 +27,11 @@ class SenderServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
     private SenderService underTest;
+    private final SenderDTOMapper mapper = new SenderDTOMapper();
 
     @BeforeEach
     void setUp() {
-        underTest = new SenderService(senderDao, passwordEncoder);
+        underTest = new SenderService(senderDao, passwordEncoder, mapper);
     }
 
     @Test
@@ -44,14 +46,20 @@ class SenderServiceTest {
     void canGetSender() {
         // Given
         long id = 10;
-        Sender sender = new Sender(id, "test@t.com", "pass");
+        Sender sender = new Sender(
+                id,
+                "test@t.com",
+                "pass",
+                List.of(new Taker("name", "name@mail.ru", 30, Gender.MALE))
+        );
         when(senderDao.selectSenderById(id)).thenReturn(Optional.of(sender));
+        SenderDTO expected = mapper.apply(sender);
 
         // When
-        Sender actual = underTest.getSender(id);
+        SenderDTO actual = underTest.getSender(id);
 
         // Then
-        assertThat(actual).isEqualTo(sender);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
