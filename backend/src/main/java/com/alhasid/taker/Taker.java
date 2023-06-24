@@ -97,7 +97,6 @@ public class Taker {
                 ", email='" + email + '\'' +
                 ", age=" + age +
                 ", gender=" + gender +
-                ", sender=" + sender +
                 '}';
     }
 }
