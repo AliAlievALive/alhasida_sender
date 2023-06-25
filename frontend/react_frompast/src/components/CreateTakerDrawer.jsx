@@ -7,7 +7,6 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
-    Input,
     useDisclosure
 } from "@chakra-ui/react";
 import CreateTakerForm from "./CreateTakerForm.jsx";
@@ -15,7 +14,7 @@ import CreateTakerForm from "./CreateTakerForm.jsx";
 const AddIcon = () => "+";
 const CloseIcon = () => "x";
 
-const CreateTakerDrawer = ({fetchTakers}) => {
+const CreateTakerDrawer = ({fetchTakers, senderId}) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     return <>
         <Button
@@ -38,6 +37,7 @@ const CreateTakerDrawer = ({fetchTakers}) => {
                 <DrawerBody>
                     <CreateTakerForm
                         fetchTakers={fetchTakers}
+                        senderId={senderId}
                     />
                 </DrawerBody>
 
