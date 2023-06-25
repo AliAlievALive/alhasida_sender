@@ -18,16 +18,16 @@ import {
     useDisclosure,
 } from '@chakra-ui/react';
 import {useRef} from "react";
-import {deleteTaker} from "../services/client.js";
+import {deleteTakerForSender} from "../services/client.js";
 import {errorNotification, successNotification} from "../services/notification.js";
 import UpdateTakerDrawer from "./UpdateTakerDrawer.jsx";
 
-export default function CardWithImage({id, name, email, age, gender, imageNumber, fetchTakers}) {
+export default function CardWithImage({id, name, email, age, gender, imageNumber, fetchTakers, senderId}) {
     const genderIn = gender === "MALE" ? "men" : "women";
     const {isOpen, onOpen, onClose} = useDisclosure()
     const cancelRef = useRef()
     const handleDelete = () =>
-        deleteTaker(id)
+        deleteTakerForSender(senderId, id)
             .then(() => {
                 successNotification("Taker deleted", `${name} was successfully deleted`);
                 fetchTakers()
@@ -83,6 +83,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                             initialValues={{name, email, age}}
                             takerId={id}
                             fetchTakers={fetchTakers}
+                            senderId={senderId}
                         />
                     </Stack>
                     <Stack>
