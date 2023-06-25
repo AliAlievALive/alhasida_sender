@@ -13,11 +13,11 @@ public class TakerListDataAccessService implements TakerDao {
 
     {
         takers = new ArrayList<>();
-        Taker alex = new Taker(1L, "Alex", "alex@gamil.com", 32, Gender.MALE, new Sender("test@t.com", "pass"));
+        Taker alex = new Taker(1L, "Alex", "alex@gamil.com", 32, Gender.MALE, new Sender(1L, "test@t.com", "pass"));
         takers.add(alex);
-        Taker alim = new Taker(2L, "Alim", "alim@gamil.com", 9, Gender.MALE, new Sender("test1@t.com", "pass"));
+        Taker alim = new Taker(2L, "Alim", "alim@gamil.com", 9, Gender.MALE, new Sender(1L, "test1@t.com", "pass"));
         takers.add(alim);
-        Taker hava = new Taker(3L, "Hava", "hava@gamil.com", 7, Gender.FEMALE, new Sender("test2@t.com", "pass"));
+        Taker hava = new Taker(3L, "Hava", "hava@gamil.com", 7, Gender.FEMALE, new Sender(2L,"test2@t.com", "pass"));
         takers.add(hava);
     }
 
@@ -59,5 +59,12 @@ public class TakerListDataAccessService implements TakerDao {
     @Override
     public void updateTaker(Taker taker) {
         takers.add(taker);
+    }
+
+    @Override
+    public List<Taker> selectTakersForSender(Long id) {
+        return takers.stream()
+                .filter(taker -> taker.getSender().getId().equals(id))
+                .toList();
     }
 }

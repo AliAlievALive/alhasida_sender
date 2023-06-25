@@ -106,4 +106,16 @@ class TakerJPADataAccessServiceTest {
         // Then
         verify(takerRepository).save(taker);
     }
+
+    @Test
+    void selectTakersBySenderId() {
+        // Given
+        long id = 1;
+
+        // When
+        underTest.selectTakersForSender(id);
+
+        // Then
+        verify(takerRepository).getTakersBySenderId(id);
+    }
 }

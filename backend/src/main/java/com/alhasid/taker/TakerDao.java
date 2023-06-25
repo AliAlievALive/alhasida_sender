@@ -11,4 +11,5 @@ public interface TakerDao {
     void deleteTaker(Long id);
     boolean existsTakerWithId(Long takerId);
     void updateTaker(Taker taker);
+    List<Taker> selectTakersForSender(Long id);
 }

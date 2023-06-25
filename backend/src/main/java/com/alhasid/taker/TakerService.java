@@ -77,4 +77,11 @@ public class TakerService {
 
         takerDao.updateTaker(taker);
     }
+
+    public List<TakerDTO> getTakersForSender(Long id) {
+        return takerDao.selectTakersForSender(id)
+                .stream()
+                .map(taker -> new TakerDTO(taker.getName(), taker.getEmail(), taker.getAge(), taker.getGender()))
+                .toList();
+    }
 }

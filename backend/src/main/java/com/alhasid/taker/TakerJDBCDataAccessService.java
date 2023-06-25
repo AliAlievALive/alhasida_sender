@@ -98,4 +98,13 @@ public class TakerJDBCDataAccessService implements TakerDao {
             jdbcTemplate.update(sql, update.getAge(), update.getId());
         }
     }
+
+    @Override
+    public List<Taker> selectTakersForSender(Long id) {
+        var sql = """
+                SELECT id, name, email, age, gender, sender_id
+                FROM taker
+                WHERE sender_id = ?""";
+        return jdbcTemplate.query(sql, takerRowMapper, id);
+    }
 }
