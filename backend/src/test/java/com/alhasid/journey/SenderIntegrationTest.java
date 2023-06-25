@@ -1,6 +1,5 @@
 package com.alhasid.journey;
 
-import com.alhasid.sender.Sender;
 import com.alhasid.sender.SenderDTO;
 import com.alhasid.sender.SenderRegistrationRequest;
 import com.alhasid.sender.SenderUpdateRequest;
@@ -86,15 +85,25 @@ class SenderIntegrationTest {
     void canDeleteSender() {
         // create registration request
         Faker faker = new Faker();
-        Name fakerName = faker.name();
-        String email = fakerName.fullName() + "-" + UUID.randomUUID() + "mail.ru";
+        String email1 = UUID.randomUUID() + faker.internet().emailAddress();
+        String email2 = UUID.randomUUID() + faker.internet().emailAddress();
         String password = "pass";
 
-        SenderRegistrationRequest request = new SenderRegistrationRequest(email, password);
+        SenderRegistrationRequest request1 = new SenderRegistrationRequest(email1, password);
+        SenderRegistrationRequest request2 = new SenderRegistrationRequest(email2, password);
 
-        // send a post request
-        String jwtToken = getJwtToken(request);
+        // send a post request to create sender 1
+        webTestClient.post()
+                .uri(SENDER_URI)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(request1), SenderRegistrationRequest.class)
+                .exchange()
+                .expectStatus()
+                .isOk();
 
+        // send a post request to create sender 2
+        String jwtToken = getJwtToken(request2);
 
         // get all senders
         List<SenderDTO> allSenders = webTestClient.get()
@@ -112,13 +121,13 @@ class SenderIntegrationTest {
         Long id = null;
         if (allSenders != null) {
             id = allSenders.stream()
-                    .filter(sender -> sender.email().equals(email))
+                    .filter(sender -> sender.email().equals(email1))
                     .map(SenderDTO::id)
                     .findFirst()
                     .orElseThrow();
         }
 
-        // delete sender
+        // sender2 delete sender1
         webTestClient.delete()
                 .uri(SENDER_URI + "/{id}", id)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
@@ -127,14 +136,14 @@ class SenderIntegrationTest {
                 .expectStatus()
                 .isOk();
 
-        // get sender by id
+        // sender2 get sender1 by id
         webTestClient.get()
                 .uri(SENDER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
                 .expectStatus()
-                .isForbidden();
+                .isNotFound();
     }
 
     @Test
@@ -152,7 +161,7 @@ class SenderIntegrationTest {
         String jwtToken = getJwtToken(request);
 
         // get all senders
-        List<Sender> allSenders = getResponseBody(jwtToken);
+        List<SenderDTO> allSenders = getResponseBody(jwtToken);
 
         Long id = null;
         id = getId(email, allSenders, id);
@@ -163,8 +172,8 @@ class SenderIntegrationTest {
         webTestClient.put()
                 .uri(SENDER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(updateRequest), SenderUpdateRequest.class)
                 .exchange()
                 .expectStatus()
@@ -193,11 +202,11 @@ class SenderIntegrationTest {
         assertThat(updatedSender).isEqualTo(expected);
     }
 
-    private static Long getId(String email, List<Sender> allSenders, Long id) {
+    private static Long getId(String email, List<SenderDTO> allSenders, Long id) {
         if (allSenders != null) {
             id = allSenders.stream()
-                    .filter(sender -> sender.getEmail().equals(email))
-                    .map(Sender::getId)
+                    .filter(sender -> sender.email().equals(email))
+                    .map(SenderDTO::id)
                     .findFirst()
                     .orElseThrow();
         }
@@ -205,7 +214,7 @@ class SenderIntegrationTest {
     }
 
     @Nullable
-    private List<Sender> getResponseBody(String jwtToken) {
+    private List<SenderDTO> getResponseBody(String jwtToken) {
         return webTestClient.get()
                 .uri(SENDER_URI)
                 .accept(MediaType.APPLICATION_JSON)
@@ -213,7 +222,7 @@ class SenderIntegrationTest {
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(new ParameterizedTypeReference<Sender>() {
+                .expectBodyList(new ParameterizedTypeReference<SenderDTO>() {
                 })
                 .returnResult()
                 .getResponseBody();
