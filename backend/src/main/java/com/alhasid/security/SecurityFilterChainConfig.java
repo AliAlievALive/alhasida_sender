@@ -43,6 +43,8 @@ public class SecurityFilterChainConfig {
                                         "/api/v1/auth/login", "/api/v1/takers", "/api/v1/senders"
                                 )
                                 .permitAll()
+                                .requestMatchers(HttpMethod.GET, "/ping")
+                                .permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement -> sessionManagement
