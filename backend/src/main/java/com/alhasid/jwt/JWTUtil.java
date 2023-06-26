@@ -10,6 +10,7 @@ import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Date.from;
@@ -66,5 +67,9 @@ public class JWTUtil {
     private boolean isTokenExpired(String jwt) {
         Date today = from(Instant.now());
         return getClaims(jwt).getExpiration().before(today);
+    }
+
+    public String issueToken(String subject, List<String> scopes) {
+        return issueToken(subject, Map.of("scopes", scopes));
     }
 }

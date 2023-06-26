@@ -45,4 +45,9 @@ public class TakerJPADataAccessService implements TakerDao {
     public void updateTaker(Taker taker) {
         takersRepo.save(taker);
     }
+
+    @Override
+    public List<Taker> selectTakersForSender(Long id) {
+        return takersRepo.getTakersBySenderId(id);
+    }
 }

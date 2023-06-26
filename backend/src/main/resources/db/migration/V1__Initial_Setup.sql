@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS sender
 CREATE TABLE IF NOT EXISTS taker(
     id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL,
     age INT,
     gender VARCHAR(6) NOT NULL default 'MALE',
     sender_id BIGINT

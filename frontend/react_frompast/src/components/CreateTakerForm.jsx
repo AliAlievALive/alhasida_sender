@@ -1,7 +1,7 @@
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack} from "@chakra-ui/react";
-import {saveTaker} from "../services/client.js";
+import {saveTakerForSender} from "../services/client.js";
 import {errorNotification, successNotification} from "../services/notification.js";
 
 const MyTextInput = ({label, ...props}) => {
@@ -34,7 +34,7 @@ const MySelect = ({label, ...props}) => {
     );
 };
 
-const CreateTakerForm = ({fetchTakers}) => {
+const CreateTakerForm = ({fetchTakers, senderId}) => {
     return (
         <>
             <Formik
@@ -64,7 +64,7 @@ const CreateTakerForm = ({fetchTakers}) => {
                 })}
                 onSubmit={(taker, {setSubmitting}) => {
                     setSubmitting(true);
-                    saveTaker(taker)
+                    saveTakerForSender(taker, senderId)
                         .then(r => {
                             console.log(r);
                             successNotification("Taker saved", `${taker.name} was successfully saved`);

@@ -1,32 +1,32 @@
 import axios from "axios";
 
-export const getTakers = async () => {
+export const getTakersForSender = async (id) => {
     try {
-        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers`)
+        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${id}`)
     } catch (err){
         throw err
     }
 };
 
-export const saveTaker = async (taker) => {
+export const saveTakerForSender = async (taker, id) => {
     try {
-        return await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers`, taker)
+        return await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${id}`, taker)
     } catch (err){
         throw err
     }
 };
 
-export const deleteTaker = async (id) => {
+export const deleteTakerForSender = async (senderId, takerId) => {
     try {
-        return await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${id}`)
+        return await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${senderId}/${takerId}`)
     } catch (err){
         throw err
     }
 };
 
-export const updateTaker = async (id, taker) => {
+export const updateTakerForSender = async (senderId, takerId, taker) => {
     try {
-        return await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${id}`, taker)
+        return await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${senderId}/${takerId}`, taker)
     } catch (err){
         throw err
     }

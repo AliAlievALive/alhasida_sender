@@ -16,12 +16,12 @@ public class SenderController {
     private JWTUtil jwtUtil;
 
     @GetMapping
-    public List<Sender> getSenders() {
+    public List<SenderDTO> getSenders() {
         return senderService.getAllSenders();
     }
 
     @GetMapping("{id}")
-    public Sender getSender(@PathVariable Long id) {
+    public SenderDTO getSender(@PathVariable Long id) {
         return senderService.getSender(id);
     }
     

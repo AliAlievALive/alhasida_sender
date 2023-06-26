@@ -8,14 +8,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.alhasid.Util.getMessage;
+
 @Service
 public class SenderService {
     private final SenderDao senderDao;
     private final PasswordEncoder passwordEncoder;
+    private final SenderDTOMapper senderDTOMapper;
 
-    public SenderService(SenderDao senderDao, PasswordEncoder passwordEncoder) {
+    public SenderService(SenderDao senderDao, PasswordEncoder passwordEncoder, SenderDTOMapper senderDTOMapper) {
         this.senderDao = senderDao;
         this.passwordEncoder = passwordEncoder;
+        this.senderDTOMapper = senderDTOMapper;
     }
 
     public void addSender(SenderRegistrationRequest request) {
@@ -26,24 +30,29 @@ public class SenderService {
         senderDao.insertSender(new Sender(request.email(), passwordEncoder.encode(request.password())));
     }
 
-    public List<Sender> getAllSenders() {
-        return senderDao.selectAllSenders();
+    public List<SenderDTO> getAllSenders() {
+        return senderDao.selectAllSenders()
+                .stream()
+                .map(senderDTOMapper)
+                .toList();
     }
 
-    public Sender getSender(Long id) {
+    public SenderDTO getSender(Long id) {
         return senderDao.selectSenderById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("sender with id [%s] not found".formatted(id)));
+                .map(senderDTOMapper)
+                .orElseThrow(() -> new ResourceNotFoundException(getMessage(id)));
     }
 
     public void deleteSender(Long id) {
         if (!senderDao.existsSenderWithId(id)) {
-            throw new ResourceNotFoundException("sender with id [%s] not found".formatted(id));
+            throw new ResourceNotFoundException(getMessage(id));
         }
         senderDao.deleteSender(id);
     }
 
     public void updateSender(Long id, SenderUpdateRequest updateRequest) {
-        Sender sender = getSender(id);
+        Sender sender = senderDao.selectSenderById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(getMessage(id)));
 
         boolean changed = false;
         if (updateRequest.email() != null && !updateRequest.email().equals(sender.getEmail())) {

@@ -1,6 +1,7 @@
 package com.alhasid.sender;
 
 import com.alhasid.AbstractSenderTestcontainer;
+import com.alhasid.TestConfig;
 import com.alhasid.taker.Gender;
 import com.alhasid.taker.Taker;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import({TestConfig.class})
 class SenderRepositoryTest extends AbstractSenderTestcontainer {
     @Autowired
     private SenderRepository underTest;

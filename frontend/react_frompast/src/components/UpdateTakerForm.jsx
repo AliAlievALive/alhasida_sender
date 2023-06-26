@@ -1,7 +1,7 @@
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
-import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack} from "@chakra-ui/react";
-import {saveTaker, updateTaker} from "../services/client.js";
+import {Alert, AlertIcon, Box, Button, FormLabel, Input, Stack} from "@chakra-ui/react";
+import {updateTakerForSender} from "../services/client.js";
 import {errorNotification, successNotification} from "../services/notification.js";
 
 const MyTextInput = ({label, ...props}) => {
@@ -19,7 +19,7 @@ const MyTextInput = ({label, ...props}) => {
     )
 }
 
-const UpdateTakerForm = ({fetchTakers, initialValues, takerId}) => {
+const UpdateTakerForm = ({fetchTakers, initialValues, takerId, senderId}) => {
     return (
         <>
             <Formik
@@ -38,7 +38,7 @@ const UpdateTakerForm = ({fetchTakers, initialValues, takerId}) => {
                 })}
                 onSubmit={(updatedTaker, {setSubmitting}) => {
                     setSubmitting(true);
-                    updateTaker(takerId, updatedTaker)
+                    updateTakerForSender(senderId, takerId, updatedTaker)
                         .then(r => {
                             console.log(r);
                             successNotification("Taker updated", `${updatedTaker.name} was successfully updated`);

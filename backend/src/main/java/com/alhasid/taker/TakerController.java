@@ -20,8 +20,12 @@ public class TakerController {
     public Taker getTaker(@PathVariable Long id) {
         return takerService.getTaker(id);
     }
+    @GetMapping("sender/{id}")
+    public List<TakerDTO> getTakersForSender(@PathVariable Long id) {
+        return takerService.getTakersForSender(id);
+    }
 
-    @PostMapping
+    @PostMapping("sender")
     public void registrationTaker(@RequestBody TakerRegistrationRequest takerRegistrationRequest) {
         takerService.addTaker(takerRegistrationRequest);
     }
