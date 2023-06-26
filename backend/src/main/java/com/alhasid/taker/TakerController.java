@@ -25,7 +25,7 @@ public class TakerController {
         return takerService.getTakersForSender(id);
     }
 
-    @PostMapping
+    @PostMapping("sender")
     public void registrationTaker(@RequestBody TakerRegistrationRequest takerRegistrationRequest) {
         takerService.addTaker(takerRegistrationRequest);
     }

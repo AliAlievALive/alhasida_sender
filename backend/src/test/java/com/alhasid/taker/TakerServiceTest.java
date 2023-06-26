@@ -4,6 +4,7 @@ import com.alhasid.exception.DuplicateResourceException;
 import com.alhasid.exception.RequestValidationException;
 import com.alhasid.exception.ResourceNotFoundException;
 import com.alhasid.sender.Sender;
+import com.alhasid.sender.SenderDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,11 +22,14 @@ import static org.mockito.Mockito.*;
 class TakerServiceTest {
     @Mock
     private TakerDao takerDao;
+
+    @Mock
+    private SenderDao senderDao;
     private TakerService underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new TakerService(takerDao);
+        underTest = new TakerService(takerDao, senderDao);
     }
 
     @Test
@@ -68,7 +72,8 @@ class TakerServiceTest {
         // Given
         String email = "ali@mail.ru";
         when(takerDao.existsTakerWithEmail(email)).thenReturn(false);
-        TakerRegistrationRequest request = new TakerRegistrationRequest("Ali", email, 20, Gender.MALE, new Sender());
+        when(senderDao.selectSenderById(70L)).thenReturn(Optional.of(new Sender()));
+        TakerRegistrationRequest request = new TakerRegistrationRequest("Ali", email, 20, Gender.MALE, 70L);
 
         // When
         underTest.addTaker(request);
@@ -91,7 +96,7 @@ class TakerServiceTest {
         // Given
         String email = "ali@mail.ru";
         when(takerDao.existsTakerWithEmail(email)).thenReturn(true);
-        TakerRegistrationRequest request = new TakerRegistrationRequest("Ali", email, 20, Gender.MALE, new Sender());
+        TakerRegistrationRequest request = new TakerRegistrationRequest("Ali", email, 20, Gender.MALE, 70L);
 
         // When
         assertThatThrownBy(() -> underTest.addTaker(request))

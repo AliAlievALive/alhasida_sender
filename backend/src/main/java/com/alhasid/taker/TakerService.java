@@ -3,17 +3,22 @@ package com.alhasid.taker;
 import com.alhasid.exception.DuplicateResourceException;
 import com.alhasid.exception.RequestValidationException;
 import com.alhasid.exception.ResourceNotFoundException;
+import com.alhasid.sender.Sender;
+import com.alhasid.sender.SenderDao;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TakerService {
     private final TakerDao takerDao;
+    private final SenderDao senderDao;
 
-    public TakerService(@Qualifier("jdbc") TakerDao takerDao) {
+    public TakerService(@Qualifier("jpa") TakerDao takerDao, SenderDao senderDao) {
         this.takerDao = takerDao;
+        this.senderDao = senderDao;
     }
 
     public List<Taker> getAllTakers() {
@@ -26,8 +31,17 @@ public class TakerService {
     }
 
     public void addTaker(TakerRegistrationRequest takerRegistrationRequest) {
-        String email = takerRegistrationRequest.email();
-        if (takerDao.existsTakerWithEmail(email)) {
+        Sender sender = senderDao.selectSenderById(takerRegistrationRequest.senderId())
+                .orElseThrow(() -> new ResourceNotFoundException("Sender not found"));
+
+        Optional<Taker> takers = sender.getTakers()
+                .stream().filter(
+                        taker -> taker.getEmail()
+                                .equals(takerRegistrationRequest.email())
+                )
+                .findFirst();
+
+        if (takers.isPresent()) {
             throw new DuplicateResourceException("email already taken");
         }
 
@@ -36,7 +50,7 @@ public class TakerService {
                 takerRegistrationRequest.email(),
                 takerRegistrationRequest.age(),
                 takerRegistrationRequest.gender(),
-                takerRegistrationRequest.sender()
+                sender
                 );
         takerDao.insertTaker(taker);
     }

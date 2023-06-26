@@ -20,23 +20,28 @@ public class SecurityFilterChainConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationEntryPoint entryPoint;
+    private final CorsConfig corsConfig;
 
     public SecurityFilterChainConfig(AuthenticationProvider authenticationProvider,
                                      JWTAuthenticationFilter jwtAuthenticationFilter,
-                                     @Qualifier("delegatedAuthEntryPoint") AuthenticationEntryPoint entryPoint) {
+                                     @Qualifier("delegatedAuthEntryPoint") AuthenticationEntryPoint entryPoint, CorsConfig corsConfig) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.entryPoint = entryPoint;
+        this.corsConfig = corsConfig;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
                 .authorizeHttpRequests(requests ->
                         requests
-                                .requestMatchers(HttpMethod.POST,
-                                        "/api/v1/senders", "/api/v1/takers")
+                                .requestMatchers(
+                                        HttpMethod.POST,
+                                        "/api/v1/auth/login", "/api/v1/takers", "/api/v1/senders"
+                                )
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )
