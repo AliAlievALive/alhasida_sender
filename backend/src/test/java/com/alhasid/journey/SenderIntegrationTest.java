@@ -24,7 +24,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class SenderIntegrationTest {
-    private static final String SENDER_URI = "/api/v1/senders";
+    private static final String SENDER_PATH = "/api/v1/senders";
     @Autowired
     private WebTestClient webTestClient;
 
@@ -43,7 +43,7 @@ class SenderIntegrationTest {
 
         // get all senders
         List<SenderDTO> allSenders = webTestClient.get()
-                .uri(SENDER_URI)
+                .uri(SENDER_PATH)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
@@ -70,7 +70,7 @@ class SenderIntegrationTest {
 
         // get sender by id
         webTestClient.get()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(SENDER_PATH + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
@@ -94,7 +94,7 @@ class SenderIntegrationTest {
 
         // send a post request to create sender 1
         webTestClient.post()
-                .uri(SENDER_URI)
+                .uri(SENDER_PATH)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(request1), SenderRegistrationRequest.class)
@@ -107,7 +107,7 @@ class SenderIntegrationTest {
 
         // get all senders
         List<SenderDTO> allSenders = webTestClient.get()
-                .uri(SENDER_URI)
+                .uri(SENDER_PATH)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
@@ -129,7 +129,7 @@ class SenderIntegrationTest {
 
         // sender2 delete sender1
         webTestClient.delete()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(SENDER_PATH + "/{id}", id)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
@@ -138,7 +138,7 @@ class SenderIntegrationTest {
 
         // sender2 get sender1 by id
         webTestClient.get()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(SENDER_PATH + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
@@ -170,7 +170,7 @@ class SenderIntegrationTest {
         String newEmail = UUID.randomUUID() + "newemail@mail.ru";
         SenderUpdateRequest updateRequest = new SenderUpdateRequest(newEmail, null);
         webTestClient.put()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(SENDER_PATH + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -187,7 +187,7 @@ class SenderIntegrationTest {
 
         // get sender by id
         SenderDTO updatedSender = webTestClient.get()
-                .uri(SENDER_URI + "/{id}", id)
+                .uri(SENDER_PATH + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
@@ -216,7 +216,7 @@ class SenderIntegrationTest {
     @Nullable
     private List<SenderDTO> getResponseBody(String jwtToken) {
         return webTestClient.get()
-                .uri(SENDER_URI)
+                .uri(SENDER_PATH)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
@@ -230,7 +230,7 @@ class SenderIntegrationTest {
 
     private String getJwtToken(SenderRegistrationRequest request) {
         return Objects.requireNonNull(webTestClient.post()
-                        .uri(SENDER_URI)
+                        .uri(SENDER_PATH)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(Mono.just(request), SenderRegistrationRequest.class)

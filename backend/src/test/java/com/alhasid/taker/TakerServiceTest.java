@@ -12,6 +12,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,8 +72,8 @@ class TakerServiceTest {
     void addTaker() {
         // Given
         String email = "ali@mail.ru";
-        when(takerDao.existsTakerWithEmail(email)).thenReturn(false);
-        when(senderDao.selectSenderById(70L)).thenReturn(Optional.of(new Sender()));
+        String password = "pass";
+        when(senderDao.selectSenderById(70L)).thenReturn(Optional.of(new Sender(email, password, List.of())));
         TakerRegistrationRequest request = new TakerRegistrationRequest("Ali", email, 20, Gender.MALE, 70L);
 
         // When
@@ -95,7 +96,9 @@ class TakerServiceTest {
     void willThrowWhenEmailExistsWhileAddingTaker() {
         // Given
         String email = "ali@mail.ru";
-        when(takerDao.existsTakerWithEmail(email)).thenReturn(true);
+        String password = "pass";
+        Sender sender = new Sender(email, password, List.of(new Taker("testname", email, 23, Gender.MALE)));
+        when(senderDao.selectSenderById(70L)).thenReturn(Optional.of(sender));
         TakerRegistrationRequest request = new TakerRegistrationRequest("Ali", email, 20, Gender.MALE, 70L);
 
         // When
