@@ -16,6 +16,7 @@ import {Form, Formik, useField} from "formik";
 import * as Yup from 'yup'
 import {useAuth} from "../context/AuthContext.jsx";
 import {errorNotification} from "../../services/notification.js";
+import {useNavigate} from "react-router-dom";
 
 const MyTextInput = ({label, ...props}) => {
     const [field, meta] = useField(props);
@@ -34,6 +35,7 @@ const MyTextInput = ({label, ...props}) => {
 
 const LoginForm = () => {
     const { login } = useAuth();
+    const navigate = useNavigate();
     return <Formik
         validateOnMount={true}
         validationSchema={Yup.object({
@@ -41,7 +43,7 @@ const LoginForm = () => {
                 .email("Must be valid email")
                 .required("Email is required"),
             password: Yup.string()
-                .min(5, "Password cannot be less than 5 characters")
+                .min(3, "Password cannot be less than 5 characters")
                 .max(20, "Password cannot be more than 20 characters")
                 .required("Password is required")
         })}
@@ -49,8 +51,8 @@ const LoginForm = () => {
         onSubmit={(values, {setSubmitting}) => {
             setSubmitting(true);
             login(values).then(res => {
-                // TODO: navigate to dashboard
-                console.log(res);
+                navigate("/dashboard");
+                console.log("Successfully logged in");
             }).catch(err => {
                 errorNotification(err.code, err.response.data.message)
             }).finally(() => {

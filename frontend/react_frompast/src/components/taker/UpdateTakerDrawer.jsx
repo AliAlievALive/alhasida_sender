@@ -19,7 +19,7 @@ function UpdateTakerFrom(props) {
 }
 
 UpdateTakerFrom.propTypes = {};
-const UpdateTakerDrawer = ({fetchTakers, initialValues, takerId, senderId}) => {
+const UpdateTakerDrawer = ({fetchTakers, initialValues, takerId}) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     return <>
         <Button
@@ -45,7 +45,6 @@ const UpdateTakerDrawer = ({fetchTakers, initialValues, takerId, senderId}) => {
                         fetchTakers={fetchTakers}
                         initialValues={initialValues}
                         takerId={takerId}
-                        senderId={senderId}
                     />
                 </DrawerBody>
 

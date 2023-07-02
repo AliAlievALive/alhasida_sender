@@ -95,7 +95,7 @@ public class TakerService {
     public List<TakerDTO> getTakersForSender(Long id) {
         return takerDao.selectTakersForSender(id)
                 .stream()
-                .map(taker -> new TakerDTO(taker.getName(), taker.getEmail(), taker.getAge(), taker.getGender()))
+                .map(taker -> new TakerDTO(taker.getId(), taker.getName(), taker.getEmail(), taker.getAge(), taker.getGender()))
                 .toList();
     }
 }

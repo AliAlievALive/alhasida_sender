@@ -1,4 +1,4 @@
 package com.alhasid.taker;
 
-public record TakerUpdateRequest(String name, String email, Integer age) {
+public record TakerUpdateRequest(String name, String email, Integer age, Long senderId) {
 }

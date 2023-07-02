@@ -7,7 +7,7 @@ import CreateTakerDrawer from "./components/taker/CreateTakerDrawer.jsx";
 import {errorNotification} from "./services/notification.js";
 
 const App = () => {
-    const senderId = 240;
+    const senderId = localStorage.getItem("sender_id");
     const [takers, setTakers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [err, setError] = useState("");
@@ -68,6 +68,7 @@ const App = () => {
                             {...taker}
                             imageNumber={index}
                             fetchTakers={fetchTakers}
+                            senderId={senderId}
                         />
                     </WrapItem>
                 ))}

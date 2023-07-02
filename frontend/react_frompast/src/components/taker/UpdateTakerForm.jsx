@@ -19,7 +19,7 @@ const MyTextInput = ({label, ...props}) => {
     )
 }
 
-const UpdateTakerForm = ({fetchTakers, initialValues, takerId, senderId}) => {
+const UpdateTakerForm = ({fetchTakers, initialValues, takerId}) => {
     return (
         <>
             <Formik
@@ -38,7 +38,7 @@ const UpdateTakerForm = ({fetchTakers, initialValues, takerId, senderId}) => {
                 })}
                 onSubmit={(updatedTaker, {setSubmitting}) => {
                     setSubmitting(true);
-                    updateTakerForSender(senderId, takerId, updatedTaker)
+                    updateTakerForSender(takerId, updatedTaker)
                         .then(r => {
                             console.log(r);
                             successNotification("Taker updated", `${updatedTaker.name} was successfully updated`);

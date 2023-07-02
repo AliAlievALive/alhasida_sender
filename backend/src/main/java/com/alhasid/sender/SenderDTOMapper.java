@@ -19,10 +19,10 @@ public class SenderDTOMapper implements Function<Sender, SenderDTO> {
                         .toList(),
                 sender.getTakers().stream()
                         .map(taker -> new TakerDTO(
+                                taker.getId(),
                                 taker.getName(),
                                 taker.getEmail(),
-                                taker.getAge(),
-                                taker.getGender()))
+                                taker.getAge(), taker.getGender()))
                         .toList(),
                 sender.getUsername()
         );

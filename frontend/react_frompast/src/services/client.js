@@ -1,8 +1,14 @@
 import axios from "axios";
 
+const getAuthConfig = () => ({
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`
+    }
+})
+
 export const getTakersForSender = async (id) => {
     try {
-        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${id}`)
+        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/sender/${id}`, getAuthConfig())
     } catch (err){
         throw err
     }
@@ -10,23 +16,31 @@ export const getTakersForSender = async (id) => {
 
 export const saveTakerForSender = async (taker, id) => {
     try {
-        return await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${id}`, taker)
+        taker.senderId = id;
+        return await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/sender`, taker, getAuthConfig())
     } catch (err){
         throw err
     }
 };
 
-export const deleteTakerForSender = async (senderId, takerId) => {
+export const deleteTakerForSender = async (takerId) => {
     try {
-        return await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${senderId}/${takerId}`)
+        return await axios.delete(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${takerId}`,
+            getAuthConfig()
+        )
     } catch (err){
         throw err
     }
 };
 
-export const updateTakerForSender = async (senderId, takerId, taker) => {
+export const updateTakerForSender = async (takerId, taker) => {
     try {
-        return await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${senderId}/${takerId}`, taker)
+        return await axios.put(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/takers/${takerId}`,
+            taker,
+            getAuthConfig()
+        )
     } catch (err){
         throw err
     }

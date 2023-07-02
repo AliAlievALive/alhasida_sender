@@ -25,7 +25,7 @@ public class Taker {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "sender_id", nullable = false)
     @JsonBackReference
     private Sender sender;

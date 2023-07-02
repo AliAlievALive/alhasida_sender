@@ -9,6 +9,7 @@ const AuthProvider = ({children}) => {
             performLogin(usernameAndPassword).then(res => {
                 const jwtToken = res.headers["authorization"];
                 localStorage.setItem("access_token", jwtToken);
+                localStorage.setItem("sender_id", res.data.senderDTO.id);
                 console.log(jwtToken);
                 setSender({
                     ...res.data.senderDTO

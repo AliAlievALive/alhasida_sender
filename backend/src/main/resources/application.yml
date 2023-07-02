@@ -19,6 +19,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
+        collation_connection: utf8_general_ci
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: false

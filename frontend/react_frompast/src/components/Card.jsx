@@ -22,12 +22,12 @@ import {deleteTakerForSender} from "../services/client.js";
 import {errorNotification, successNotification} from "../services/notification.js";
 import UpdateTakerDrawer from "./taker/UpdateTakerDrawer.jsx";
 
-export default function CardWithImage({id, name, email, age, gender, imageNumber, fetchTakers, senderId}) {
+export default function CardWithImage({id, name, email, age, gender, imageNumber, fetchTakers}) {
     const genderIn = gender === "MALE" ? "men" : "women";
     const {isOpen, onOpen, onClose} = useDisclosure()
     const cancelRef = useRef()
     const handleDelete = () =>
-        deleteTakerForSender(senderId, id)
+        deleteTakerForSender(id)
             .then(() => {
                 successNotification("Taker deleted", `${name} was successfully deleted`);
                 fetchTakers()
@@ -81,9 +81,8 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                     <Stack>
                         <UpdateTakerDrawer
                             initialValues={{name, email, age}}
-                            takerId={id}
                             fetchTakers={fetchTakers}
-                            senderId={senderId}
+                            takerId={id}
                         />
                     </Stack>
                     <Stack>

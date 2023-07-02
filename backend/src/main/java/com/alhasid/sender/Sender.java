@@ -29,7 +29,7 @@ public class Sender implements UserDetails {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "sender", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Taker> takers;
 
