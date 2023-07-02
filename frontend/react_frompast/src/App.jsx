@@ -3,11 +3,11 @@ import {Spinner, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {getTakersForSender} from "./services/client.js";
 import CardWithImage from "./components/Card.jsx";
-import CreateTakerDrawer from "./components/CreateTakerDrawer.jsx";
+import CreateTakerDrawer from "./components/taker/CreateTakerDrawer.jsx";
 import {errorNotification} from "./services/notification.js";
 
 const App = () => {
-    const senderId = 70;
+    const senderId = 240;
     const [takers, setTakers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [err, setError] = useState("");

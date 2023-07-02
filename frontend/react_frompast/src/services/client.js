@@ -31,3 +31,11 @@ export const updateTakerForSender = async (senderId, takerId, taker) => {
         throw err
     }
 };
+
+export const login = async (usernameAndPassword) => {
+    try {
+        return await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login`, usernameAndPassword)
+    } catch (err){
+        throw err
+    }
+};

@@ -20,7 +20,7 @@ import {
 import {useRef} from "react";
 import {deleteTakerForSender} from "../services/client.js";
 import {errorNotification, successNotification} from "../services/notification.js";
-import UpdateTakerDrawer from "./UpdateTakerDrawer.jsx";
+import UpdateTakerDrawer from "./taker/UpdateTakerDrawer.jsx";
 
 export default function CardWithImage({id, name, email, age, gender, imageNumber, fetchTakers, senderId}) {
     const genderIn = gender === "MALE" ? "men" : "women";
